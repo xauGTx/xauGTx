@@ -1,0 +1,834 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD Chart & Signal History</title>
+<meta name="description" content="XAUUSD price chart, BUY SELL WAIT signal log and trading signal history.">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.panel{
+background:#111820;
+border:1px solid #2b3742;
+border-radius:16px;
+padding:20px;
+margin:20px 0;
+}
+
+.chart-wrap{
+height:360px;
+position:relative;
+overflow:hidden;
+border:1px solid #293540;
+border-radius:12px;
+background:#0b0f14;
+}
+
+canvas{
+width:100%;
+height:100%;
+display:block;
+}
+
+.controls{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:12px;
+}
+
+input,select{
+width:100%;
+box-sizing:border-box;
+padding:11px;
+border-radius:8px;
+border:1px solid #35414d;
+background:#0b0f14;
+color:white;
+}
+
+button{
+padding:11px 16px;
+border:0;
+border-radius:8px;
+cursor:pointer;
+font-weight:700;
+margin:4px;
+}
+
+.buy{
+color:#35d07f;
+font-weight:800;
+}
+
+.sell{
+color:#ff6464;
+font-weight:800;
+}
+
+.wait{
+color:#f0c75e;
+font-weight:800;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:12px;
+}
+
+.stat{
+padding:16px;
+border-radius:12px;
+background:#0b0f14;
+border:1px solid #293540;
+}
+
+.stat small{
+display:block;
+color:#9ca8b4;
+margin-bottom:6px;
+}
+
+.stat strong{
+font-size:22px;
+}
+
+.table-wrap{
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:650px;
+}
+
+th,td{
+padding:11px;
+border-bottom:1px solid #293540;
+text-align:left;
+}
+
+.note{
+color:#9ca8b4;
+font-size:14px;
+line-height:1.6;
+}
+
+.empty{
+text-align:center;
+padding:25px;
+color:#9ca8b4;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+
+<h1>XAUUSD CHART & SIGNAL HISTORY</h1>
+<p>Price chart • BUY • SELL • WAIT • History</p>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="technical-signal.html">Technical Signal</a>
+<a href="dashboard.html">Live Price</a>
+<a href="../journal/index.html">Journal</a>
+</nav>
+
+</div>
+</header>
+
+
+<main class="container">
+
+<section class="panel">
+
+<h2>XAUUSD Price Chart</h2>
+
+<div class="chart-wrap">
+<canvas id="priceChart"></canvas>
+</div>
+
+<p class="note">
+Chart data ខាងក្រោមគឺជា price points ដែលអ្នកបញ្ចូល។
+វាមិនមែនជា live market feed ទេ។
+</p>
+
+</section>
+
+
+<section class="panel">
+
+<h2>Add Price Point</h2>
+
+<div class="controls">
+
+<div>
+<label>Price</label>
+<input id="priceInput" type="number" step="0.01" placeholder="3650.00">
+</div>
+
+<div>
+<label>Signal</label>
+<select id="signalInput">
+<option value="WAIT">WAIT</option>
+<option value="BUY">BUY</option>
+<option value="SELL">SELL</option>
+</select>
+</div>
+
+</div>
+
+<button onclick="addPrice()">ADD PRICE</button>
+<button onclick="clearPrices()">CLEAR CHART</button>
+
+</section>
+
+
+<section class="panel">
+
+<h2>Current Statistics</h2>
+
+<div class="stats">
+
+<div class="stat">
+<small>Latest Price</small>
+<strong id="latestPrice">--</strong>
+</div>
+
+<div class="stat">
+<small>Price Points</small>
+<strong id="pointCount">0</strong>
+</div>
+
+<div class="stat">
+<small>BUY Logs</small>
+<strong id="buyCount">0</strong>
+</div>
+
+<div class="stat">
+<small>SELL Logs</small>
+<strong id="sellCount">0</strong>
+</div>
+
+<div class="stat">
+<small>WAIT Logs</small>
+<strong id="waitCount">0</strong>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="panel">
+
+<h2>Signal Log</h2>
+
+<div class="controls">
+
+<div>
+<label>Price</label>
+<input id="logPrice" type="number" step="0.01" placeholder="3650.00">
+</div>
+
+<div>
+<label>Signal</label>
+<select id="logSignal">
+<option value="BUY">BUY</option>
+<option value="SELL">SELL</option>
+<option value="WAIT">WAIT</option>
+</select>
+</div>
+
+<div>
+<label>Timeframe</label>
+<select id="logTF">
+<option>M5</option>
+<option>M15</option>
+<option>H1</option>
+<option>H4</option>
+<option>D1</option>
+</select>
+</div>
+
+<div>
+<label>Confidence %</label>
+<input id="logConfidence" type="number" min="0" max="100" step="1" placeholder="70">
+</div>
+
+</div>
+
+<div>
+<label>Reason</label>
+<input id="logReason" type="text" placeholder="EMA + RSI + MACD agreement">
+</div>
+
+<button onclick="addLog()">SAVE SIGNAL</button>
+<button onclick="clearLogs()">CLEAR SIGNAL HISTORY</button>
+
+</section>
+
+
+<section class="panel">
+
+<h2>BUY / SELL / WAIT History</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Date / Time</th>
+<th>Signal</th>
+<th>Price</th>
+<th>TF</th>
+<th>Confidence</th>
+<th>Reason</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="historyBody"></tbody>
+
+</table>
+
+</div>
+
+<div id="empty" class="empty">
+No signal history yet.
+</div>
+
+</section>
+
+
+<section class="panel">
+
+<h2>How it works</h2>
+
+<p class="note">
+1. បញ្ចូល XAUUSD price point ដើម្បីបង្កើត chart។<br>
+2. ជ្រើស BUY / SELL / WAIT។<br>
+3. Save signal ដើម្បីរក្សាទុក history។<br>
+4. History ត្រូវបានរក្សាទុកក្នុង browser localStorage។<br>
+5. Clear browser storage ឬ Clear History អាចលុបទិន្នន័យបាន។
+</p>
+
+<p class="note">
+⚠️ BUY / SELL / WAIT នៅទីនេះគឺជា signal log សម្រាប់ការវិភាគ
+និង journal ប៉ុណ្ណោះ។ វាមិនបើក trade ដោយស្វ័យប្រវត្តិទេ។
+</p>
+
+</section>
+
+</main>
+
+
+<script>
+
+const PRICE_KEY = "xauusd_chart_prices_v1";
+const LOG_KEY = "xauusd_signal_logs_v1";
+
+let prices =
+JSON.parse(localStorage.getItem(PRICE_KEY) || "[]");
+
+let logs =
+JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+
+
+function saveData(){
+
+localStorage.setItem(
+PRICE_KEY,
+JSON.stringify(prices)
+);
+
+localStorage.setItem(
+LOG_KEY,
+JSON.stringify(logs)
+);
+
+}
+
+
+function addPrice(){
+
+const value =
+Number(document.getElementById("priceInput").value);
+
+const signal =
+document.getElementById("signalInput").value;
+
+if(!value || value<=0){
+
+alert("Please enter a valid XAUUSD price.");
+
+return;
+}
+
+prices.push({
+
+time:new Date().toISOString(),
+price:value,
+signal:signal
+
+});
+
+saveData();
+
+document.getElementById("priceInput").value="";
+
+drawChart();
+updateStats();
+
+}
+
+
+function clearPrices(){
+
+if(!confirm("Clear all chart price points?")){
+
+return;
+}
+
+prices=[];
+
+saveData();
+
+drawChart();
+updateStats();
+
+}
+
+
+function addLog(){
+
+const price =
+Number(document.getElementById("logPrice").value);
+
+const signal =
+document.getElementById("logSignal").value;
+
+const tf =
+document.getElementById("logTF").value;
+
+const confidence =
+Number(document.getElementById("logConfidence").value || 0);
+
+const reason =
+document.getElementById("logReason").value.trim();
+
+if(!price || price<=0){
+
+alert("Please enter a valid price.");
+
+return;
+}
+
+logs.unshift({
+
+id:Date.now(),
+
+time:new Date().toLocaleString(),
+
+signal:signal,
+
+price:price,
+
+tf:tf,
+
+confidence:confidence,
+
+reason:reason || "Manual signal log"
+
+});
+
+saveData();
+
+document.getElementById("logPrice").value="";
+document.getElementById("logConfidence").value="";
+document.getElementById("logReason").value="";
+
+renderLogs();
+updateStats();
+
+}
+
+
+function deleteLog(id){
+
+logs =
+logs.filter(
+item => item.id !== id
+);
+
+saveData();
+
+renderLogs();
+updateStats();
+
+}
+
+
+function clearLogs(){
+
+if(!confirm("Clear all signal history?")){
+
+return;
+}
+
+logs=[];
+
+saveData();
+
+renderLogs();
+updateStats();
+
+}
+
+
+function signalClass(signal){
+
+if(signal==="BUY") return "buy";
+
+if(signal==="SELL") return "sell";
+
+return "wait";
+
+}
+
+
+function renderLogs(){
+
+const body =
+document.getElementById("historyBody");
+
+const empty =
+document.getElementById("empty");
+
+body.innerHTML="";
+
+if(logs.length===0){
+
+empty.style.display="block";
+
+return;
+
+}
+
+empty.style.display="none";
+
+logs.forEach(item=>{
+
+const row =
+document.createElement("tr");
+
+row.innerHTML=`
+
+<td>${escapeHTML(item.time)}</td>
+
+<td class="${signalClass(item.signal)}">
+${escapeHTML(item.signal)}
+</td>
+
+<td>${Number(item.price).toFixed(2)}</td>
+
+<td>${escapeHTML(item.tf)}</td>
+
+<td>${Number(item.confidence)}%</td>
+
+<td>${escapeHTML(item.reason)}</td>
+
+<td>
+<button onclick="deleteLog(${item.id})">
+Delete
+</button>
+</td>
+
+`;
+
+body.appendChild(row);
+
+});
+
+}
+
+
+function escapeHTML(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+function updateStats(){
+
+const latest =
+prices.length
+? prices[prices.length-1].price
+: null;
+
+document.getElementById("latestPrice")
+.textContent =
+latest
+? Number(latest).toFixed(2)
+: "--";
+
+document.getElementById("pointCount")
+.textContent =
+prices.length;
+
+document.getElementById("buyCount")
+.textContent =
+logs.filter(x=>x.signal==="BUY").length;
+
+document.getElementById("sellCount")
+.textContent =
+logs.filter(x=>x.signal==="SELL").length;
+
+document.getElementById("waitCount")
+.textContent =
+logs.filter(x=>x.signal==="WAIT").length;
+
+}
+
+
+function drawChart(){
+
+const canvas =
+document.getElementById("priceChart");
+
+const rect =
+canvas.getBoundingClientRect();
+
+const dpr =
+window.devicePixelRatio || 1;
+
+canvas.width =
+rect.width*dpr;
+
+canvas.height =
+rect.height*dpr;
+
+const ctx =
+canvas.getContext("2d");
+
+ctx.scale(dpr,dpr);
+
+const width=rect.width;
+const height=rect.height;
+
+ctx.clearRect(
+0,
+0,
+width,
+height
+);
+
+
+/* Grid */
+
+ctx.strokeStyle="#293540";
+ctx.lineWidth=1;
+
+for(let i=1;i<6;i++){
+
+const y=
+(i/6)*height;
+
+ctx.beginPath();
+ctx.moveTo(0,y);
+ctx.lineTo(width,y);
+ctx.stroke();
+
+}
+
+for(let i=1;i<10;i++){
+
+const x=
+(i/10)*width;
+
+ctx.beginPath();
+ctx.moveTo(x,0);
+ctx.lineTo(x,height);
+ctx.stroke();
+
+}
+
+
+/* Empty */
+
+if(prices.length===0){
+
+ctx.fillStyle="#9ca8b4";
+ctx.font="16px Arial";
+ctx.textAlign="center";
+
+ctx.fillText(
+"Add price points to create the chart",
+width/2,
+height/2
+);
+
+return;
+
+}
+
+
+const values =
+prices.map(x=>Number(x.price));
+
+let min =
+Math.min(...values);
+
+let max =
+Math.max(...values);
+
+if(min===max){
+
+min-=1;
+max+=1;
+
+}
+
+const padding=35;
+
+const chartW =
+width-padding*2;
+
+const chartH =
+height-padding*2;
+
+
+function xPos(i){
+
+if(values.length===1){
+
+return width/2;
+
+}
+
+return padding+
+(i/(values.length-1))*chartW;
+
+}
+
+
+function yPos(value){
+
+return padding+
+((max-value)/(max-min))*chartH;
+
+}
+
+
+/* Price line */
+
+ctx.strokeStyle="#d4af37";
+ctx.lineWidth=2.5;
+
+ctx.beginPath();
+
+values.forEach((value,i)=>{
+
+const x=xPos(i);
+const y=yPos(value);
+
+if(i===0){
+
+ctx.moveTo(x,y);
+
+}else{
+
+ctx.lineTo(x,y);
+
+}
+
+});
+
+ctx.stroke();
+
+
+/* Points */
+
+values.forEach((value,i)=>{
+
+const item=prices[i];
+
+const x=xPos(i);
+const y=yPos(value);
+
+ctx.beginPath();
+
+ctx.arc(
+x,
+y,
+4,
+0,
+Math.PI*2
+);
+
+if(item.signal==="BUY"){
+
+ctx.fillStyle="#35d07f";
+
+}else if(item.signal==="SELL"){
+
+ctx.fillStyle="#ff6464";
+
+}else{
+
+ctx.fillStyle="#f0c75e";
+
+}
+
+ctx.fill();
+
+});
+
+
+/* Labels */
+
+ctx.fillStyle="#9ca8b4";
+ctx.font="12px Arial";
+
+ctx.textAlign="left";
+
+ctx.fillText(
+max.toFixed(2),
+5,
+padding
+);
+
+ctx.fillText(
+min.toFixed(2),
+5,
+height-padding
+);
+
+}
+
+
+window.addEventListener(
+"resize",
+drawChart
+);
+
+renderLogs();
+updateStats();
+drawChart();
+
+</script>
+
+</body>
+</html>
