@@ -1,0 +1,420 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD Live Dashboard</title>
+<meta name="description" content="XAUUSD Gold live price dashboard, bid, ask, high, low and daily change.">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.dashboard{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+margin:20px 0;
+}
+
+.stat{
+padding:20px;
+border-radius:16px;
+background:#111820;
+border:1px solid #26313c;
+}
+
+.stat small{
+display:block;
+color:#9ca8b4;
+margin-bottom:8px;
+}
+
+.stat strong{
+font-size:28px;
+}
+
+.price{
+font-size:46px!important;
+}
+
+.up{
+color:#35d07f;
+}
+
+.down{
+color:#ff6464;
+}
+
+.form-box{
+padding:20px;
+margin:20px 0;
+border-radius:16px;
+background:#111820;
+border:1px solid #26313c;
+}
+
+input{
+width:100%;
+box-sizing:border-box;
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #34404c;
+background:#0b0f14;
+color:white;
+}
+
+button{
+padding:12px 18px;
+border:0;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.note{
+color:#9ca8b4;
+font-size:14px;
+line-height:1.6;
+}
+
+.status{
+margin-top:12px;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+<h1>XAUUSD LIVE DASHBOARD</h1>
+<p>Gold / USD Spot Market</p>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../tools/risk-calculator.html">Tools</a>
+<a href="../education/ema-50-200.html">Education</a>
+<a href="xauusd.html">Market</a>
+<a href="../journal/index.html">Journal</a>
+</nav>
+
+</div>
+</header>
+
+<main class="container">
+
+<section class="card">
+
+<h2>Gold Price</h2>
+
+<p>
+Live spot data is supplied by the configured market-data API.
+</p>
+
+<div class="dashboard">
+
+<div class="stat">
+<small>XAUUSD PRICE</small>
+<strong id="price" class="price">--</strong>
+</div>
+
+<div class="stat">
+<small>BID</small>
+<strong id="bid">--</strong>
+</div>
+
+<div class="stat">
+<small>ASK</small>
+<strong id="ask">--</strong>
+</div>
+
+<div class="stat">
+<small>HIGH</small>
+<strong id="high">--</strong>
+</div>
+
+<div class="stat">
+<small>LOW</small>
+<strong id="low">--</strong>
+</div>
+
+<div class="stat">
+<small>CHANGE</small>
+<strong id="change">--</strong>
+</div>
+
+</div>
+
+<div class="stat">
+<small>LAST UPDATE</small>
+<strong id="updated">--</strong>
+</div>
+
+</section>
+
+
+<section class="form-box">
+
+<h2>API Configuration</h2>
+
+<p class="note">
+ដាក់ API Key របស់អ្នកនៅទីនេះ។ Key ត្រូវបានរក្សាទុកក្នុង browser
+localStorage របស់អ្នក។ កុំ commit API Key ទៅ GitHub។
+</p>
+
+<input
+id="apiKey"
+type="password"
+placeholder="Enter your Metals.Dev API Key">
+
+<button onclick="saveKey()">Save API Key</button>
+<button onclick="clearKey()">Clear Key</button>
+
+<div id="status" class="status">
+Not connected
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h2>Market Information</h2>
+
+<p>
+Symbol: <strong>XAUUSD</strong>
+</p>
+
+<p>
+Metal: <strong>Gold</strong>
+</p>
+
+<p>
+Currency: <strong>USD</strong>
+</p>
+
+<p>
+Unit: <strong>Troy Ounce</strong>
+</p>
+
+<p class="note">
+Data availability and update frequency depend on the selected API plan.
+This dashboard does not execute trades.
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>Important Risk Notice</h2>
+
+<p class="note">
+Market prices can change rapidly. This website is for educational
+and informational purposes only. It is not financial advice and does
+not guarantee trading results.
+</p>
+
+</section>
+
+</main>
+
+<footer class="container">
+<p>XAUUSD WEB — Gold Trading Tools & Education</p>
+</footer>
+
+
+<script>
+
+const API_URL =
+"https://api.metals.dev/v1/metal/spot?metal=gold&currency=USD";
+
+let apiKey = localStorage.getItem("xauusd_api_key") || "";
+
+document.getElementById("apiKey").value = apiKey;
+
+
+function saveKey(){
+
+apiKey =
+document.getElementById("apiKey").value.trim();
+
+if(!apiKey){
+
+setStatus("Please enter an API key.", true);
+
+return;
+}
+
+localStorage.setItem("xauusd_api_key", apiKey);
+
+setStatus("API key saved. Loading market data...");
+
+loadGold();
+
+}
+
+
+function clearKey(){
+
+localStorage.removeItem("xauusd_api_key");
+
+document.getElementById("apiKey").value = "";
+
+apiKey = "";
+
+setStatus("API key cleared.");
+
+}
+
+
+function setStatus(message,error=false){
+
+const el =
+document.getElementById("status");
+
+el.textContent = message;
+
+el.style.color =
+error ? "#ff6464" : "#35d07f";
+
+}
+
+
+function money(value){
+
+if(value === undefined || value === null){
+
+return "--";
+
+}
+
+return Number(value).toFixed(2);
+
+}
+
+
+async function loadGold(){
+
+if(!apiKey){
+
+setStatus("API key is not configured.",true);
+
+return;
+}
+
+try{
+
+setStatus("Loading XAUUSD data...");
+
+const url =
+API_URL +
+"&api_key=" +
+encodeURIComponent(apiKey);
+
+const response =
+await fetch(url,{
+headers:{
+"Accept":"application/json"
+}
+});
+
+if(!response.ok){
+
+throw new Error(
+"HTTP " + response.status
+);
+
+}
+
+const data =
+await response.json();
+
+if(data.status !== "success"){
+
+throw new Error(
+data.error || "API request failed"
+);
+
+}
+
+const rate = data.rate;
+
+document.getElementById("price").textContent =
+money(rate.price);
+
+document.getElementById("bid").textContent =
+money(rate.bid);
+
+document.getElementById("ask").textContent =
+money(rate.ask);
+
+document.getElementById("high").textContent =
+money(rate.high);
+
+document.getElementById("low").textContent =
+money(rate.low);
+
+const change =
+Number(rate.change || 0);
+
+const changePercent =
+Number(rate.change_percent || 0);
+
+const changeEl =
+document.getElementById("change");
+
+changeEl.textContent =
+(change >= 0 ? "+" : "") +
+change.toFixed(2) +
+" (" +
+(changePercent >= 0 ? "+" : "") +
+changePercent.toFixed(2) +
+"%)";
+
+changeEl.className =
+change >= 0 ? "up" : "down";
+
+document.getElementById("updated").textContent =
+data.timestamp
+? new Date(data.timestamp).toLocaleString()
+: new Date().toLocaleString();
+
+setStatus("Connected — XAUUSD data loaded.");
+
+}catch(error){
+
+console.error(error);
+
+setStatus(
+"Connection failed: " + error.message,
+true
+);
+
+}
+
+}
+
+
+if(apiKey){
+
+loadGold();
+
+}
+
+
+setInterval(() => {
+
+if(apiKey){
+
+loadGold();
+
+}
+
+},60000);
+
+</script>
+
+</body>
+</html>
