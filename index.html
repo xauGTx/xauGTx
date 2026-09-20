@@ -1,347 +1,530 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Free XAUUSD trading calculators, risk management tools and trading journal.">
-
-    <title>XAUUSD Tools - Free Trading Tools</title>
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XAUUSD Trading Tools | Free Gold Trading Calculators</title>
+<meta name="description" content="Free XAUUSD trading tools including risk calculator, risk reward calculator, price distance, profit loss calculator and trading journal.">
+<meta name="robots" content="index,follow">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="top">
+<header class="header">
+<div class="container nav">
+<a href="#home" class="logo">XAU<span>USD</span> Tools</a>
 
-    <div class="logo">
-        XAUUSD <span>TOOLS</span>
-    </div>
-
-    <nav>
-        <a href="#risk">Risk</a>
-        <a href="#rr">R:R</a>
-        <a href="#pip">Pip</a>
-        <a href="#profit">Profit</a>
-        <a href="#journal">Journal</a>
-    </nav>
-
+<nav>
+<a href="#risk">Risk</a>
+<a href="#rr">R:R</a>
+<a href="#price">Price</a>
+<a href="#profit">P/L</a>
+<a href="#journal">Journal</a>
+<a href="#education">Learn</a>
+</nav>
+</div>
 </header>
-
 
 <main>
 
-<section class="hero">
+<section id="home" class="hero">
+<div class="container hero-grid">
 
-    <div class="badge">
-        FREE TRADING TOOLS
-    </div>
+<div>
+<div class="badge">FREE XAUUSD TRADING TOOLS</div>
 
-    <h1>
-        XAUUSD Trading Tools
-    </h1>
+<h1>Trade Gold With <span>Better Risk Control</span></h1>
 
-    <p>
-        Free calculators for risk management,
-        position sizing and trade planning.
-    </p>
+<p class="hero-text">
+Free XAUUSD calculators and trading tools to help traders
+plan risk, reward, position size and trading decisions.
+</p>
 
+<div class="hero-buttons">
+<a href="#risk" class="btn primary">Start Calculating</a>
+<a href="#education" class="btn secondary">Learn XAUUSD</a>
+</div>
+</div>
+
+<div class="hero-card">
+<div class="hero-card-title">Trading Reminder</div>
+
+<div class="hero-stat">
+<span>Risk per trade</span>
+<strong>1–2%</strong>
+</div>
+
+<div class="hero-stat">
+<span>Target R:R</span>
+<strong>1:2+</strong>
+</div>
+
+<div class="hero-stat">
+<span>Discipline</span>
+<strong>100%</strong>
+</div>
+
+<p>
+Calculators are educational estimates.
+Always verify your broker's contract specifications.
+</p>
+</div>
+
+</div>
 </section>
 
 
-<!-- RISK CALCULATOR -->
+<section class="section">
+<div class="container">
 
-<section class="card" id="risk">
+<div class="section-title">
+<span>TOOLS</span>
+<h2>Free XAUUSD Trading Tools</h2>
+<p>Calculate your trade before risking real money.</p>
+</div>
 
-    <h2>🧮 Risk Calculator</h2>
+<div class="tool-grid">
 
-    <div class="grid">
+<a href="#risk" class="tool-link">
+<div class="tool-icon">🛡️</div>
+<h3>Risk Calculator</h3>
+<p>Calculate risk amount and estimated position size.</p>
+</a>
 
-        <div>
-            <label>Account Balance ($)</label>
-            <input id="balance" type="number" value="100">
-        </div>
+<a href="#rr" class="tool-link">
+<div class="tool-icon">⚖️</div>
+<h3>Risk / Reward</h3>
+<p>Calculate reward-to-risk ratio and target price.</p>
+</a>
 
-        <div>
-            <label>Risk (%)</label>
-            <input id="risk" type="number" value="1" step="0.1">
-        </div>
+<a href="#price" class="tool-link">
+<div class="tool-icon">📏</div>
+<h3>Price Distance</h3>
+<p>Calculate XAUUSD price movement.</p>
+</a>
 
-        <div>
-            <label>Entry Price</label>
-            <input id="entry" type="number" value="3650" step="0.01">
-        </div>
+<a href="#profit" class="tool-link">
+<div class="tool-icon">💰</div>
+<h3>Profit / Loss</h3>
+<p>Estimate potential trade profit or loss.</p>
+</a>
 
-        <div>
-            <label>Stop Loss</label>
-            <input id="sl" type="number" value="3640" step="0.01">
-        </div>
+<a href="#journal" class="tool-link">
+<div class="tool-icon">📒</div>
+<h3>Trading Journal</h3>
+<p>Save and review your trading history.</p>
+</a>
 
-        <div>
-            <label>Take Profit</label>
-            <input id="tp" type="number" value="3670" step="0.01">
-        </div>
+<a href="#education" class="tool-link">
+<div class="tool-icon">📚</div>
+<h3>XAUUSD Guide</h3>
+<p>Learn basic gold trading concepts.</p>
+</a>
 
-    </div>
-
-    <button onclick="calculateRisk()">
-        CALCULATE
-    </button>
-
-    <div class="results">
-
-        <div>
-            <span>Risk Amount</span>
-            <strong id="riskAmount">$0.00</strong>
-        </div>
-
-        <div>
-            <span>Stop Distance</span>
-            <strong id="stopDistance">0.00</strong>
-        </div>
-
-        <div>
-            <span>Target Distance</span>
-            <strong id="targetDistance">0.00</strong>
-        </div>
-
-        <div>
-            <span>Risk / Reward</span>
-            <strong id="riskReward">1 : 0</strong>
-        </div>
-
-        <div>
-            <span>Position Size</span>
-            <strong id="positionSize">0.00</strong>
-        </div>
-
-    </div>
-
+</div>
+</div>
 </section>
 
 
-<!-- R:R -->
+<section id="risk" class="section dark-section">
+<div class="container">
 
-<section class="card" id="rr">
+<div class="section-title">
+<span>CALCULATOR 01</span>
+<h2>Risk Calculator</h2>
+<p>Estimate how much of your account you are risking.</p>
+</div>
 
-    <h2>📊 Risk / Reward Calculator</h2>
+<div class="calculator">
 
-    <div class="grid">
+<div class="form-grid">
 
-        <div>
-            <label>Risk Amount ($)</label>
-            <input id="rrRisk" type="number" value="10">
-        </div>
+<div class="field">
+<label>Account Balance ($)</label>
+<input id="riskBalance" type="number" value="1000" min="0" step="0.01">
+</div>
 
-        <div>
-            <label>Reward Amount ($)</label>
-            <input id="rrReward" type="number" value="20">
-        </div>
+<div class="field">
+<label>Risk (%)</label>
+<input id="riskPercent" type="number" value="1" min="0" step="0.1">
+</div>
 
-    </div>
+<div class="field">
+<label>Entry Price</label>
+<input id="riskEntry" type="number" value="2650" step="0.01">
+</div>
 
-    <button onclick="calculateRR()">
-        CALCULATE R:R
-    </button>
+<div class="field">
+<label>Stop Loss Price</label>
+<input id="riskSL" type="number" value="2640" step="0.01">
+</div>
 
-    <div class="bigResult" id="rrResult">
-        1 : 2
-    </div>
+</div>
 
+<button class="btn primary full" onclick="calculateRisk()">
+Calculate Risk
+</button>
+
+<div id="riskResult" class="result"></div>
+
+</div>
+</div>
 </section>
 
 
-<!-- PIP -->
+<section id="rr" class="section">
+<div class="container">
 
-<section class="card" id="pip">
+<div class="section-title">
+<span>CALCULATOR 02</span>
+<h2>Risk / Reward Calculator</h2>
+<p>Measure potential reward compared with your risk.</p>
+</div>
 
-    <h2>📈 XAUUSD Price Distance</h2>
+<div class="calculator">
 
-    <div class="grid">
+<div class="form-grid">
 
-        <div>
-            <label>Entry Price</label>
-            <input id="pipEntry" type="number" value="3650">
-        </div>
+<div class="field">
+<label>Direction</label>
+<select id="rrDirection">
+<option value="buy">BUY</option>
+<option value="sell">SELL</option>
+</select>
+</div>
 
-        <div>
-            <label>Exit Price</label>
-            <input id="pipExit" type="number" value="3660">
-        </div>
+<div class="field">
+<label>Entry Price</label>
+<input id="rrEntry" type="number" value="2650" step="0.01">
+</div>
 
-        <div>
-            <label>Lot Size</label>
-            <input id="pipLot" type="number" value="0.01" step="0.01">
-        </div>
+<div class="field">
+<label>Stop Loss</label>
+<input id="rrSL" type="number" value="2640" step="0.01">
+</div>
 
-    </div>
+<div class="field">
+<label>Take Profit</label>
+<input id="rrTP" type="number" value="2670" step="0.01">
+</div>
 
-    <button onclick="calculatePip()">
-        CALCULATE
-    </button>
+</div>
 
-    <div class="results">
+<button class="btn primary full" onclick="calculateRR()">
+Calculate R:R
+</button>
 
-        <div>
-            <span>Price Movement</span>
-            <strong id="priceMovement">0.00</strong>
-        </div>
+<div id="rrResult" class="result"></div>
 
-        <div>
-            <span>Estimated P/L*</span>
-            <strong id="estimatedPL">$0.00</strong>
-        </div>
-
-    </div>
-
-    <small>
-        *Estimated calculation. Broker contract specifications may differ.
-    </small>
-
+</div>
+</div>
 </section>
 
 
-<!-- PROFIT -->
+<section id="price" class="section dark-section">
+<div class="container">
 
-<section class="card" id="profit">
+<div class="section-title">
+<span>CALCULATOR 03</span>
+<h2>XAUUSD Price Distance</h2>
+<p>Calculate the movement between two gold prices.</p>
+</div>
 
-    <h2>💰 Profit / Loss Calculator</h2>
+<div class="calculator">
 
-    <div class="grid">
+<div class="form-grid">
 
-        <div>
-            <label>Entry</label>
-            <input id="plEntry" type="number" value="3650">
-        </div>
+<div class="field">
+<label>Start Price</label>
+<input id="priceStart" type="number" value="2650" step="0.01">
+</div>
 
-        <div>
-            <label>Exit</label>
-            <input id="plExit" type="number" value="3670">
-        </div>
+<div class="field">
+<label>End Price</label>
+<input id="priceEnd" type="number" value="2660" step="0.01">
+</div>
 
-        <div>
-            <label>Lot Size</label>
-            <input id="plLot" type="number" value="0.01" step="0.01">
-        </div>
+</div>
 
-    </div>
+<button class="btn primary full" onclick="calculatePriceDistance()">
+Calculate Distance
+</button>
 
-    <button onclick="calculatePL()">
-        CALCULATE P/L
-    </button>
+<div id="priceResult" class="result"></div>
 
-    <div class="bigResult" id="plResult">
-        $0.00
-    </div>
-
+</div>
+</div>
 </section>
 
 
-<!-- JOURNAL -->
+<section id="profit" class="section">
+<div class="container">
 
-<section class="card" id="journal">
+<div class="section-title">
+<span>CALCULATOR 04</span>
+<h2>Profit / Loss Calculator</h2>
+<p>Estimate potential trade profit or loss.</p>
+</div>
 
-    <h2>📝 Trading Journal</h2>
+<div class="calculator">
 
-    <div class="grid">
+<div class="form-grid">
 
-        <div>
-            <label>Date</label>
-            <input id="jDate" type="date">
-        </div>
+<div class="field">
+<label>Direction</label>
+<select id="plDirection">
+<option value="buy">BUY</option>
+<option value="sell">SELL</option>
+</select>
+</div>
 
-        <div>
-            <label>Direction</label>
+<div class="field">
+<label>Entry Price</label>
+<input id="plEntry" type="number" value="2650" step="0.01">
+</div>
 
-            <select id="jDirection">
+<div class="field">
+<label>Exit Price</label>
+<input id="plExit" type="number" value="2670" step="0.01">
+</div>
 
-                <option>BUY</option>
-                <option>SELL</option>
-                <option>WAIT</option>
+<div class="field">
+<label>Lot Size</label>
+<input id="plLot" type="number" value="0.01" min="0" step="0.01">
+</div>
 
-            </select>
+<div class="field">
+<label>Contract Size</label>
+<input id="plContract" type="number" value="100" min="1">
+</div>
 
-        </div>
+</div>
 
-        <div>
-            <label>Timeframe</label>
+<button class="btn primary full" onclick="calculatePL()">
+Calculate P/L
+</button>
 
-            <select id="jTF">
+<div id="plResult" class="result"></div>
 
-                <option>M5</option>
-                <option>M15</option>
-                <option>M30</option>
-                <option>H1</option>
-                <option>H4</option>
-
-            </select>
-
-        </div>
-
-        <div>
-            <label>Entry</label>
-            <input id="jEntry" type="number">
-        </div>
-
-        <div>
-            <label>Stop Loss</label>
-            <input id="jSL" type="number">
-        </div>
-
-        <div>
-            <label>Take Profit</label>
-            <input id="jTP" type="number">
-        </div>
-
-    </div>
-
-    <label>Reason / Notes</label>
-
-    <textarea id="jNotes"
-              placeholder="Why did you take this trade?"></textarea>
-
-    <button onclick="saveJournal()">
-        SAVE JOURNAL
-    </button>
-
-    <div id="journalStatus" class="message"></div>
-
+</div>
+</div>
 </section>
 
 
-<section class="info">
+<section id="journal" class="section dark-section">
+<div class="container">
 
-    <h2>⚠️ Risk Reminder</h2>
+<div class="section-title">
+<span>TRADING JOURNAL</span>
+<h2>Trading Journal</h2>
+<p>Save your trades locally in your browser.</p>
+</div>
 
-    <p>
-        These tools are for educational purposes.
-        Always verify contract size, tick value, spread,
-        margin and other trading conditions with your broker.
-    </p>
+<div class="calculator">
 
+<div class="form-grid">
+
+<div class="field">
+<label>Date</label>
+<input id="journalDate" type="date">
+</div>
+
+<div class="field">
+<label>Symbol</label>
+<input id="journalSymbol" type="text" value="XAUUSD">
+</div>
+
+<div class="field">
+<label>Direction</label>
+<select id="journalDirection">
+<option value="BUY">BUY</option>
+<option value="SELL">SELL</option>
+<option value="WAIT">WAIT</option>
+</select>
+</div>
+
+<div class="field">
+<label>Timeframe</label>
+<select id="journalTF">
+<option>M5</option>
+<option>M15</option>
+<option>H1</option>
+<option>H4</option>
+<option>D1</option>
+</select>
+</div>
+
+<div class="field">
+<label>Entry</label>
+<input id="journalEntry" type="number" step="0.01">
+</div>
+
+<div class="field">
+<label>Stop Loss</label>
+<input id="journalSL" type="number" step="0.01">
+</div>
+
+<div class="field">
+<label>Take Profit</label>
+<input id="journalTP" type="number" step="0.01">
+</div>
+
+<div class="field">
+<label>Result ($)</label>
+<input id="journalResult" type="number" step="0.01">
+</div>
+
+</div>
+
+<div class="field">
+<label>Reason / Notes</label>
+<textarea id="journalNotes" rows="4" placeholder="Why did you take this trade?"></textarea>
+</div>
+
+<button class="btn primary full" onclick="saveJournal()">
+Save Trade
+</button>
+
+<div id="journalMessage" class="message"></div>
+
+</div>
+
+
+<div class="journal-box">
+
+<div class="journal-header">
+<h3>Saved Trades</h3>
+<button class="btn danger" onclick="clearJournal()">Clear All</button>
+</div>
+
+<div id="journalList"></div>
+
+</div>
+
+</div>
+</section>
+
+
+<section id="education" class="section">
+<div class="container">
+
+<div class="section-title">
+<span>LEARN</span>
+<h2>XAUUSD Trading Guide</h2>
+<p>Simple concepts for traders learning gold markets.</p>
+</div>
+
+<div class="education-grid">
+
+<article class="education-card">
+<div class="edu-number">01</div>
+<h3>EMA 200</h3>
+<p>
+EMA 200 can be used as a longer-term trend reference.
+It should not be treated as a standalone entry signal.
+</p>
+</article>
+
+<article class="education-card">
+<div class="edu-number">02</div>
+<h3>EMA 50</h3>
+<p>
+EMA 50 can help traders observe medium-term price direction
+and possible dynamic support or resistance.
+</p>
+</article>
+
+<article class="education-card">
+<div class="edu-number">03</div>
+<h3>RSI</h3>
+<p>
+RSI measures recent price momentum. Common reference levels
+include 30 and 70, but context remains important.
+</p>
+</article>
+
+<article class="education-card">
+<div class="edu-number">04</div>
+<h3>MACD</h3>
+<p>
+MACD compares moving averages to study momentum and possible
+trend changes.
+</p>
+</article>
+
+<article class="education-card">
+<div class="edu-number">05</div>
+<h3>Support & Resistance</h3>
+<p>
+Previous highs, lows and important price areas can help
+identify locations where price has reacted.
+</p>
+</article>
+
+<article class="education-card">
+<div class="edu-number">06</div>
+<h3>Risk Management</h3>
+<p>
+Position sizing and stop-loss planning are important parts
+of a trading plan. Never risk money you cannot afford to lose.
+</p>
+</article>
+
+</div>
+</div>
+</section>
+
+
+<section class="disclaimer">
+<div class="container">
+
+<h3>Risk Disclaimer</h3>
+
+<p>
+This website provides educational calculators and general trading
+information only. It does not provide financial, investment or
+trading advice and does not guarantee profits. XAUUSD contract
+specifications, tick values, spreads and margin requirements vary
+by broker. Always verify specifications with your broker.
+</p>
+
+</div>
 </section>
 
 </main>
 
 
-<footer>
+<footer class="footer">
+<div class="container footer-grid">
 
-    <strong>XAUUSD TOOLS</strong>
+<div>
+<h3>XAUUSD Tools</h3>
+<p>Free educational tools for gold traders.</p>
+</div>
 
-    <p>
-        Free educational trading tools.
-    </p>
+<div>
+<h4>Tools</h4>
+<a href="#risk">Risk Calculator</a>
+<a href="#rr">Risk / Reward</a>
+<a href="#price">Price Distance</a>
+<a href="#profit">Profit / Loss</a>
+</div>
 
-    <p>
-        © 2026 XAUUSD Tools
-    </p>
+<div>
+<h4>Learn</h4>
+<a href="#education">XAUUSD Guide</a>
+<a href="#journal">Trading Journal</a>
+</div>
+
+</div>
+
+<div class="copyright">
+© 2026 XAUUSD Tools. Educational use only.
+</div>
 
 </footer>
 
-
 <script src="app.js"></script>
-
 </body>
 </html>
