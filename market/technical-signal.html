@@ -1,0 +1,604 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD Technical Signal Dashboard</title>
+<meta name="description" content="XAUUSD technical analysis dashboard with EMA 50 200, RSI 9, MACD and trading signal clues.">
+<link rel="stylesheet" href="../style.css">
+
+<style>
+.signal-box{
+padding:28px;
+margin:20px 0;
+text-align:center;
+border:1px solid #303b47;
+border-radius:18px;
+background:#111820;
+}
+
+.signal{
+font-size:42px;
+font-weight:800;
+margin:10px 0;
+}
+
+.wait{color:#f0c75e}
+.buy{color:#35d07f}
+.sell{color:#ff6464}
+
+.grid2{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+margin:20px 0;
+}
+
+.stat{
+background:#111820;
+border:1px solid #303b47;
+border-radius:14px;
+padding:18px;
+}
+
+.stat small{
+display:block;
+color:#9ca8b4;
+margin-bottom:7px;
+}
+
+.stat strong{
+font-size:25px;
+}
+
+input,select{
+width:100%;
+box-sizing:border-box;
+padding:12px;
+margin:6px 0 14px;
+border-radius:8px;
+border:1px solid #35414d;
+background:#0b0f14;
+color:white;
+}
+
+button{
+padding:12px 20px;
+border:0;
+border-radius:8px;
+font-weight:700;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #29333d;
+text-align:left;
+}
+
+.good{color:#35d07f}
+.bad{color:#ff6464}
+.neutral{color:#f0c75e}
+
+.note{
+color:#9ca8b4;
+line-height:1.6;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+
+<h1>XAUUSD TECHNICAL DASHBOARD</h1>
+<p>EMA • RSI • MACD • Signal Clue</p>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../tools/risk-calculator.html">Tools</a>
+<a href="../education/ema-50-200.html">Education</a>
+<a href="dashboard.html">Live Price</a>
+<a href="../journal/index.html">Journal</a>
+</nav>
+
+</div>
+</header>
+
+
+<main class="container">
+
+<section class="card">
+
+<h2>Market Input</h2>
+
+<p class="note">
+បញ្ចូលតម្លៃ និង indicator values ពី TradingView ឬ MT5។
+Dashboard នេះជាឧបករណ៍វិភាគ មិនមែនជាការធានាថាតម្លៃនឹងឡើង ឬចុះទេ។
+</p>
+
+<div class="grid2">
+
+<div>
+<label>Timeframe</label>
+<select id="timeframe">
+<option>M5</option>
+<option>M15</option>
+<option>H1</option>
+<option>H4</option>
+<option>D1</option>
+</select>
+</div>
+
+<div>
+<label>Current Price</label>
+<input id="price" type="number" step="0.01" placeholder="e.g. 3650.00">
+</div>
+
+<div>
+<label>EMA 50</label>
+<input id="ema50" type="number" step="0.01" placeholder="EMA 50">
+</div>
+
+<div>
+<label>EMA 200</label>
+<input id="ema200" type="number" step="0.01" placeholder="EMA 200">
+</div>
+
+<div>
+<label>RSI 9</label>
+<input id="rsi" type="number" step="0.01" min="0" max="100" placeholder="e.g. 55">
+</div>
+
+<div>
+<label>MACD Main</label>
+<input id="macd" type="number" step="0.00001" placeholder="MACD">
+</div>
+
+<div>
+<label>MACD Signal</label>
+<input id="macdSignal" type="number" step="0.00001" placeholder="Signal">
+</div>
+
+<div>
+<label>Account Balance ($)</label>
+<input id="balance" type="number" step="0.01" value="100">
+</div>
+
+<div>
+<label>Risk %</label>
+<input id="risk" type="number" step="0.1" value="1">
+</div>
+
+</div>
+
+<button onclick="analyze()">ANALYZE XAUUSD</button>
+
+</section>
+
+
+<section class="signal-box">
+
+<div>FINAL SIGNAL CLUE</div>
+
+<div id="signal" class="signal wait">
+WAIT
+</div>
+
+<div id="reason">
+Enter market data and analyze.
+</div>
+
+</section>
+
+
+<section>
+
+<h2>Indicator Analysis</h2>
+
+<div class="grid2">
+
+<div class="stat">
+<small>EMA 50 / 200</small>
+<strong id="emaResult">--</strong>
+</div>
+
+<div class="stat">
+<small>RSI 9</small>
+<strong id="rsiResult">--</strong>
+</div>
+
+<div class="stat">
+<small>MACD</small>
+<strong id="macdResult">--</strong>
+</div>
+
+<div class="stat">
+<small>TIMEFRAME</small>
+<strong id="tfResult">--</strong>
+</div>
+
+<div class="stat">
+<small>SCORE</small>
+<strong id="scoreResult">--</strong>
+</div>
+
+<div class="stat">
+<small>CONFIDENCE</small>
+<strong id="confidenceResult">--</strong>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="card">
+
+<h2>Trade Planning</h2>
+
+<div class="grid2">
+
+<div class="stat">
+<small>Suggested Entry</small>
+<strong id="entry">--</strong>
+</div>
+
+<div class="stat">
+<small>Stop Loss</small>
+<strong id="sl">--</strong>
+</div>
+
+<div class="stat">
+<small>Take Profit</small>
+<strong id="tp">--</strong>
+</div>
+
+<div class="stat">
+<small>Risk Amount</small>
+<strong id="riskAmount">--</strong>
+</div>
+
+</div>
+
+<p class="note">
+SL/TP ខាងលើគឺជាការគណនាគំរូសម្រាប់ការសិក្សា។
+មុន Trade ពិត ត្រូវពិនិត្យ Market Structure, Liquidity, News,
+Spread និង Risk Gate បន្ថែម។
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>Signal Breakdown</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Factor</th>
+<th>Result</th>
+<th>Points</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>EMA Trend</td>
+<td id="emaTable">--</td>
+<td id="emaPoints">--</td>
+</tr>
+
+<tr>
+<td>RSI</td>
+<td id="rsiTable">--</td>
+<td id="rsiPoints">--</td>
+</tr>
+
+<tr>
+<td>MACD</td>
+<td id="macdTable">--</td>
+<td id="macdPoints">--</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+
+
+<section class="card">
+
+<h2>⚠️ Risk Notice</h2>
+
+<p class="note">
+BUY CLUE និង SELL CLUE មិនមែនជាការធានាផលចំណេញទេ។
+XAUUSD អាចមាន volatility ខ្លាំង និងអាចធ្វើ movement លឿន។
+ប្រើ Stop Loss និងកុំប្រើ risk ដែលអ្នកមិនអាចទទួលយកបាន។
+</p>
+
+</section>
+
+</main>
+
+
+<script>
+
+function num(id){
+
+return Number(document.getElementById(id).value);
+
+}
+
+
+function setText(id,value){
+
+document.getElementById(id).textContent=value;
+
+}
+
+
+function analyze(){
+
+const price=num("price");
+const ema50=num("ema50");
+const ema200=num("ema200");
+const rsi=num("rsi");
+const macd=num("macd");
+const macdSignal=num("macdSignal");
+const balance=num("balance");
+const risk=num("risk");
+
+let score=0;
+
+let emaPoints=0;
+let rsiPoints=0;
+let macdPoints=0;
+
+let emaText="WAIT";
+let rsiText="WAIT";
+let macdText="WAIT";
+
+
+/* EMA */
+
+if(ema50>ema200){
+
+score+=2;
+emaPoints=2;
+emaText="BULLISH";
+
+}else if(ema50<ema200){
+
+score-=2;
+emaPoints=-2;
+emaText="BEARISH";
+
+}
+
+
+/* Price vs EMA 200 */
+
+if(price>ema200){
+
+score+=1;
+
+}else if(price<ema200){
+
+score-=1;
+
+}
+
+
+/* RSI */
+
+if(rsi>=52 && rsi<70){
+
+score+=2;
+rsiPoints=2;
+rsiText="BULLISH";
+
+}else if(rsi<=48 && rsi>30){
+
+score-=2;
+rsiPoints=-2;
+rsiText="BEARISH";
+
+}else if(rsi>=70){
+
+rsiText="OVERBOUGHT";
+
+}else if(rsi<=30){
+
+rsiText="OVERSOLD";
+
+}
+
+
+/* MACD */
+
+if(macd>macdSignal){
+
+score+=2;
+macdPoints=2;
+macdText="BULLISH";
+
+}else if(macd<macdSignal){
+
+score-=2;
+macdPoints=-2;
+macdText="BEARISH";
+
+}
+
+
+/* Final */
+
+let signal="WAIT";
+let className="wait";
+
+if(score>=5){
+
+signal="BUY CLUE";
+className="buy";
+
+}else if(score<=-5){
+
+signal="SELL CLUE";
+className="sell";
+
+}
+
+
+const maxScore=8;
+
+const confidence=
+Math.min(
+100,
+Math.round(
+Math.abs(score)/maxScore*100
+)
+);
+
+
+const signalEl=
+document.getElementById("signal");
+
+signalEl.textContent=signal;
+signalEl.className="signal "+className;
+
+
+let reason="";
+
+if(signal==="BUY CLUE"){
+
+reason="Bullish factors have stronger agreement.";
+
+}else if(signal==="SELL CLUE"){
+
+reason="Bearish factors have stronger agreement.";
+
+}else{
+
+reason="Indicator agreement is not strong enough. WAIT.";
+
+}
+
+
+/* Results */
+
+setText("reason",reason);
+
+setText(
+"emaResult",
+emaText
+);
+
+setText(
+"rsiResult",
+rsiText+" ("+rsi+")"
+);
+
+setText(
+"macdResult",
+macdText
+);
+
+setText(
+"tfResult",
+document.getElementById("timeframe").value
+);
+
+setText(
+"scoreResult",
+score
+);
+
+setText(
+"confidenceResult",
+confidence+"%"
+);
+
+
+/* Table */
+
+setText("emaTable",emaText);
+setText("emaPoints",emaPoints);
+
+setText("rsiTable",rsiText);
+setText("rsiPoints",rsiPoints);
+
+setText("macdTable",macdText);
+setText("macdPoints",macdPoints);
+
+
+/* Trade planning */
+
+if(price>0){
+
+const entry=price;
+
+let sl;
+let tp;
+
+if(signal==="BUY CLUE"){
+
+sl=price-(price*0.003);
+tp=price+(price*0.006);
+
+}else if(signal==="SELL CLUE"){
+
+sl=price+(price*0.003);
+tp=price-(price*0.006);
+
+}else{
+
+sl=price;
+tp=price;
+
+}
+
+setText(
+"entry",
+entry.toFixed(2)
+);
+
+setText(
+"sl",
+sl.toFixed(2)
+);
+
+setText(
+"tp",
+tp.toFixed(2)
+);
+
+const riskAmount=
+balance*(risk/100);
+
+setText(
+"riskAmount",
+"$"+riskAmount.toFixed(2)
+);
+
+}
+
+}
+
+
+</script>
+
+</body>
+</html>
