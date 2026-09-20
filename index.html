@@ -2,790 +2,215 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>XAUUSD Tools | Gold Trading Calculator & Journal</title>
-
-<meta name="description" content="Free XAUUSD trading tools including risk calculator, position size calculator, risk reward calculator, profit loss calculator, trading journal and gold trading education.">
-
-<meta name="keywords" content="XAUUSD, gold trading, gold calculator, forex calculator, risk calculator, position size calculator, trading journal, RSI, MACD, EMA, SMC">
-
-<meta name="robots" content="index,follow">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD WEB - Gold Trading Tools</title>
+<meta name="description" content="XAUUSD trading calculators, education, market analysis and trading journal.">
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="header">
-    <div class="container nav">
+<header>
+<div class="container">
+<h1>XAUUSD WEB</h1>
+<p>Gold Trading Tools - Analysis - Education - Journal</p>
 
-        <a href="#home" class="logo">
-            <span>🟡</span> XAUUSD Tools
-        </a>
+<nav>
+<a href="index.html">Home</a>
+<a href="#tools">Tools</a>
+<a href="#education">Education</a>
+<a href="#market">Market</a>
+<a href="journal/index.html">Journal</a>
+<a href="news/index.html">News</a>
+</nav>
 
-        <nav>
-            <a href="#tools">Tools</a>
-            <a href="#journal">Journal</a>
-            <a href="#education">Learn</a>
-            <a href="#risk">Risk</a>
-            <a href="#about">About</a>
-        </nav>
-
-    </div>
+</div>
 </header>
 
-<main>
+<main class="container">
 
-<section id="home" class="hero">
-    <div class="container hero-grid">
-
-        <div>
-            <span class="badge">FREE XAUUSD TRADING TOOLS</span>
-
-            <h1>
-                XAUUSD Trading
-                <span>Tools</span>
-            </h1>
-
-            <p>
-                Calculate position size, risk, reward, profit and loss.
-                Track your trades and learn the fundamentals of gold trading.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#tools" class="btn primary">Open Tools</a>
-                <a href="#education" class="btn secondary">Learn XAUUSD</a>
-            </div>
-        </div>
-
-        <div class="hero-card">
-
-            <div class="market-title">
-                <span>XAUUSD</span>
-                <span class="live-dot">●</span>
-            </div>
-
-            <div class="fake-price">
-                GOLD
-            </div>
-
-            <div class="market-grid">
-                <div>
-                    <small>Asset</small>
-                    <strong>Gold / USD</strong>
-                </div>
-
-                <div>
-                    <small>Type</small>
-                    <strong>Commodity</strong>
-                </div>
-
-                <div>
-                    <small>Tools</small>
-                    <strong>10+</strong>
-                </div>
-
-                <div>
-                    <small>Journal</small>
-                    <strong>Local</strong>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+<section class="card">
+<h2>XAUUSD Trading Center</h2>
+<p>
+Free tools and educational resources for Gold / XAUUSD traders.
+</p>
 </section>
 
 
-<section id="tools" class="section">
+<section id="tools">
+<h2>Trading Tools</h2>
 
-<div class="container">
-
-<div class="section-heading">
-    <span class="eyebrow">TRADING TOOLS</span>
-    <h2>XAUUSD Calculators</h2>
-    <p>Free calculators for planning your trades.</p>
-</div>
-
-
-<div class="tool-grid">
-
-<!-- RISK -->
-
-<div class="card calculator">
-
-<h3>🛡️ Risk Calculator</h3>
-
-<label>Account Balance</label>
-<input id="riskBalance" type="number" value="100">
-
-<label>Risk %</label>
-<input id="riskPercent" type="number" value="1" step="0.1">
-
-<label>Entry Price</label>
-<input id="riskEntry" type="number" value="2650">
-
-<label>Stop Loss</label>
-<input id="riskSL" type="number" value="2640">
-
-<label>Contract Size</label>
-<input id="riskContract" type="number" value="100">
-
-<button class="btn primary full" onclick="calculateRisk()">
-Calculate Risk
-</button>
-
-<div id="riskResult" class="result"></div>
-
-</div>
-
-
-<!-- RR -->
-
-<div class="card calculator">
-
-<h3>🎯 Risk / Reward</h3>
-
-<label>Entry Price</label>
-<input id="rrEntry" type="number" value="2650">
-
-<label>Stop Loss</label>
-<input id="rrSL" type="number" value="2640">
-
-<label>Take Profit</label>
-<input id="rrTP" type="number" value="2670">
-
-<button class="btn primary full" onclick="calculateRR()">
-Calculate RR
-</button>
-
-<div id="rrResult" class="result"></div>
-
-</div>
-
-
-<!-- DISTANCE -->
-
-<div class="card calculator">
-
-<h3>📏 Price Distance</h3>
-
-<label>Entry Price</label>
-<input id="distEntry" type="number" value="2650">
-
-<label>Target Price</label>
-<input id="distTarget" type="number" value="2675">
-
-<button class="btn primary full" onclick="calculateDistance()">
-Calculate Distance
-</button>
-
-<div id="distResult" class="result"></div>
-
-</div>
-
-
-<!-- PNL -->
-
-<div class="card calculator">
-
-<h3>💰 Profit / Loss</h3>
-
-<label>Direction</label>
-
-<select id="plDirection">
-<option value="BUY">BUY</option>
-<option value="SELL">SELL</option>
-</select>
-
-<label>Entry Price</label>
-<input id="plEntry" type="number" value="2650">
-
-<label>Exit Price</label>
-<input id="plExit" type="number" value="2670">
-
-<label>Lot Size</label>
-<input id="plLot" type="number" value="0.01" step="0.01">
-
-<label>Contract Size</label>
-<input id="plContract" type="number" value="100">
-
-<button class="btn primary full" onclick="calculatePL()">
-Calculate P/L
-</button>
-
-<div id="plResult" class="result"></div>
-
-</div>
-
-
-<!-- POSITION -->
-
-<div class="card calculator">
-
-<h3>📐 Position Size</h3>
-
-<label>Account Balance</label>
-<input id="posBalance" type="number" value="100">
-
-<label>Risk %</label>
-<input id="posRisk" type="number" value="1" step="0.1">
-
-<label>Stop Distance</label>
-<input id="posDistance" type="number" value="10">
-
-<label>Contract Size</label>
-<input id="posContract" type="number" value="100">
-
-<button class="btn primary full" onclick="calculatePosition()">
-Calculate Lot
-</button>
-
-<div id="posResult" class="result"></div>
-
-</div>
-
-
-<!-- BREAK EVEN -->
-
-<div class="card calculator">
-
-<h3>⚖️ Break-Even</h3>
-
-<label>Entry Price</label>
-<input id="beEntry" type="number" value="2650">
-
-<label>Spread</label>
-<input id="beSpread" type="number" value="0.30">
-
-<label>Commission / Unit</label>
-<input id="beCommission" type="number" value="0">
-
-<button class="btn primary full" onclick="calculateBE()">
-Calculate
-</button>
-
-<div id="beResult" class="result"></div>
-
-</div>
-
-</div>
-
-</div>
-</section>
-
-
-<section id="journal" class="section alt">
-
-<div class="container">
-
-<div class="section-heading">
-    <span class="eyebrow">TRADE JOURNAL</span>
-    <h2>Your Trading Journal</h2>
-    <p>Trades are stored locally in your browser.</p>
-</div>
-
-<div class="journal-layout">
+<div class="grid">
 
 <div class="card">
-
-<h3>Add Trade</h3>
-
-<label>Date</label>
-<input id="tradeDate" type="date">
-
-<label>Symbol</label>
-<input id="tradeSymbol" value="XAUUSD">
-
-<label>Direction</label>
-
-<select id="tradeSide">
-<option>BUY</option>
-<option>SELL</option>
-</select>
-
-<label>Entry</label>
-<input id="tradeEntry" type="number">
-
-<label>Stop Loss</label>
-<input id="tradeSL" type="number">
-
-<label>Take Profit</label>
-<input id="tradeTP" type="number">
-
-<label>Result ($)</label>
-<input id="tradeResult" type="number">
-
-<label>Reason</label>
-<textarea id="tradeReason" rows="4"></textarea>
-
-<button class="btn primary full" onclick="addTrade()">
-Save Trade
-</button>
-
+<h3>Risk Calculator</h3>
+<p>Calculate trading risk.</p>
+<a href="tools/risk-calculator.html">Open Tool</a>
 </div>
-
 
 <div class="card">
-
-<h3>Journal Statistics</h3>
-
-<div class="stats">
-
-<div>
-<span>Total Trades</span>
-<strong id="totalTrades">0</strong>
+<h3>Position Size</h3>
+<p>Calculate position size.</p>
+<a href="tools/position-size.html">Open Tool</a>
 </div>
 
-<div>
-<span>Wins</span>
-<strong id="winTrades">0</strong>
-</div>
-
-<div>
-<span>Losses</span>
-<strong id="lossTrades">0</strong>
-</div>
-
-<div>
-<span>Win Rate</span>
-<strong id="winRate">0%</strong>
-</div>
-
-<div>
-<span>Total P/L</span>
-<strong id="totalPL">$0.00</strong>
-</div>
-
-</div>
-
-<button class="btn danger full" onclick="clearJournal()">
-Clear Journal
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card journal-table-card">
-
-<h3>Trade History</h3>
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Date</th>
-<th>Symbol</th>
-<th>Side</th>
-<th>Entry</th>
-<th>SL</th>
-<th>TP</th>
-<th>P/L</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody id="journalBody"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
-</section>
-
-
-<section id="education" class="section">
-
-<div class="container">
-
-<div class="section-heading">
-    <span class="eyebrow">XAUUSD EDUCATION</span>
-    <h2>Learn Gold Trading</h2>
-    <p>Understand the basic tools before taking risk.</p>
-</div>
-
-
-<div class="education-grid">
-
-<article class="edu-card">
-
-<div class="edu-icon">📈</div>
-
-<h3>EMA 200</h3>
-
-<p>
-EMA 200 is commonly used to understand the longer-term market direction.
-</p>
-
-<ul>
-<li>Price above EMA 200 → bullish context</li>
-<li>Price below EMA 200 → bearish context</li>
-<li>Use with structure and confirmation</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">📊</div>
-
-<h3>EMA 50</h3>
-
-<p>
-EMA 50 can help identify medium-term momentum and dynamic areas of interest.
-</p>
-
-<ul>
-<li>EMA 50 above EMA 200</li>
-<li>EMA 50 below EMA 200</li>
-<li>Look for confirmation</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">🔥</div>
-
-<h3>RSI 9</h3>
-
-<p>
-RSI measures momentum on a scale from 0 to 100.
-</p>
-
-<ul>
-<li>Above 70 can indicate strong momentum</li>
-<li>Below 30 can indicate strong downside momentum</li>
-<li>Do not use RSI alone</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">〽️</div>
-
-<h3>MACD</h3>
-
-<p>
-MACD compares moving averages to study momentum and trend changes.
-</p>
-
-<ul>
-<li>MACD line</li>
-<li>Signal line</li>
-<li>Histogram</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">🏗️</div>
-
-<h3>Market Structure</h3>
-
-<p>
-Structure helps traders organize price movement using swing highs and lows.
-</p>
-
-<ul>
-<li>HH</li>
-<li>HL</li>
-<li>LH</li>
-<li>LL</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">💧</div>
-
-<h3>Liquidity</h3>
-
-<p>
-Liquidity areas can exist around previous highs, lows and obvious price levels.
-</p>
-
-<ul>
-<li>Liquidity sweep</li>
-<li>False breakout</li>
-<li>Confirmation required</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">🚀</div>
-
-<h3>BOS</h3>
-
-<p>
-Break of Structure can indicate that price has broken a meaningful swing level.
-</p>
-
-<ul>
-<li>Bullish BOS</li>
-<li>Bearish BOS</li>
-<li>Combine with context</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">🔄</div>
-
-<h3>CHOCH / MSS</h3>
-
-<p>
-CHOCH or MSS can describe a potential change in short-term market structure.
-</p>
-
-<ul>
-<li>Observe previous structure</li>
-<li>Wait for confirmation</li>
-<li>Avoid entering from one signal only</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">📦</div>
-
-<h3>Order Block</h3>
-
-<p>
-Order blocks are commonly used by SMC traders to identify areas where price may react.
-</p>
-
-<ul>
-<li>Identify strong displacement</li>
-<li>Locate relevant candle area</li>
-<li>Wait for confirmation</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">🧱</div>
-
-<h3>Fair Value Gap</h3>
-
-<p>
-FVG refers to an imbalance between candles that traders may monitor for future price interaction.
-</p>
-
-<ul>
-<li>Bullish FVG</li>
-<li>Bearish FVG</li>
-<li>Use with market structure</li>
-</ul>
-
-</article>
-
-
-<article class="edu-card">
-
-<div class="edu-icon">🎯</div>
-
+<div class="card">
 <h3>Risk / Reward</h3>
+<p>Calculate R:R.</p>
+<a href="tools/rr-calculator.html">Open Tool</a>
+</div>
 
-<p>
-Risk/reward compares the potential loss with the potential profit of a setup.
-</p>
+<div class="card">
+<h3>Profit / Loss</h3>
+<p>Estimate P/L.</p>
+<a href="tools/profit-loss.html">Open Tool</a>
+</div>
 
-<ul>
-<li>Define SL first</li>
-<li>Define TP</li>
-<li>Calculate ratio</li>
-</ul>
+<div class="card">
+<h3>Price Distance</h3>
+<p>Calculate XAUUSD price distance.</p>
+<a href="tools/price-distance.html">Open Tool</a>
+</div>
 
-</article>
+<div class="card">
+<h3>Pip Value</h3>
+<p>Estimate movement value.</p>
+<a href="tools/pip-value.html">Open Tool</a>
+</div>
 
-
-<article class="edu-card">
-
-<div class="edu-icon">🛡️</div>
-
-<h3>Risk Management</h3>
-
-<p>
-Risk management determines how much capital can be exposed to a single trade.
-</p>
-
-<ul>
-<li>Risk per trade</li>
-<li>Stop loss</li>
-<li>Position sizing</li>
-</ul>
-
-</article>
-
+<div class="card">
+<h3>Breakeven</h3>
+<p>Calculate breakeven level.</p>
+<a href="tools/breakeven.html">Open Tool</a>
 </div>
 
 </div>
 </section>
 
 
-<section id="risk" class="section alt">
+<section id="education">
+<h2>Education</h2>
 
-<div class="container">
+<div class="grid">
 
-<div class="section-heading">
-
-<span class="eyebrow">RISK MANAGEMENT</span>
-
-<h2>Protect Your Trading Account</h2>
-
+<div class="card">
+<h3>EMA 50 / 200</h3>
+<a href="education/ema-50-200.html">Learn EMA</a>
 </div>
 
-
-<div class="risk-grid">
-
-<div class="risk-box">
-
-<h3>1️⃣ Define Risk</h3>
-
-<p>
-Choose the maximum amount you are willing to lose before entering a trade.
-</p>
-
+<div class="card">
+<h3>RSI 9</h3>
+<a href="education/rsi-9.html">Learn RSI</a>
 </div>
 
-
-<div class="risk-box">
-
-<h3>2️⃣ Define Stop Loss</h3>
-
-<p>
-Place your stop based on the trading setup rather than choosing it randomly.
-</p>
-
+<div class="card">
+<h3>MACD 12 / 26 / 9</h3>
+<a href="education/macd-12-26-9.html">Learn MACD</a>
 </div>
 
-
-<div class="risk-box">
-
-<h3>3️⃣ Calculate Position</h3>
-
-<p>
-Position size should be based on your risk amount and stop distance.
-</p>
-
+<div class="card">
+<h3>Stochastic</h3>
+<a href="education/stochastic.html">Learn Stochastic</a>
 </div>
 
+<div class="card">
+<h3>Market Structure</h3>
+<a href="education/market-structure.html">Learn Structure</a>
+</div>
 
-<div class="risk-box">
+<div class="card">
+<h3>BOS</h3>
+<a href="education/bos.html">Learn BOS</a>
+</div>
 
-<h3>4️⃣ Follow Your Plan</h3>
+<div class="card">
+<h3>CHOCH / MSS</h3>
+<a href="education/choch-mss.html">Learn CHOCH / MSS</a>
+</div>
 
-<p>
-Avoid changing your risk because of FOMO, revenge trading or emotional decisions.
-</p>
+<div class="card">
+<h3>Liquidity</h3>
+<a href="education/liquidity.html">Learn Liquidity</a>
+</div>
 
+<div class="card">
+<h3>Order Block / FVG</h3>
+<a href="education/order-block-fvg.html">Learn OB / FVG</a>
 </div>
 
 </div>
+</section>
 
+
+<section id="market">
+<h2>Market Center</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>XAUUSD Market</h3>
+<a href="market/xauusd.html">Open Market</a>
+</div>
+
+<div class="card">
+<h3>Technical Analysis</h3>
+<a href="market/technical.html">Open Technical</a>
+</div>
+
+<div class="card">
+<h3>Market Structure</h3>
+<a href="market/structure.html">Open Structure</a>
+</div>
+
+<div class="card">
+<h3>Trading Sessions</h3>
+<a href="market/sessions.html">Open Sessions</a>
+</div>
+
+</div>
+</section>
+
+
+<section>
+<h2>Trading Journal</h2>
+
+<div class="card">
+<p>Record your XAUUSD trades, risk, SL, TP and results.</p>
+<a href="journal/index.html">Open Trading Journal</a>
 </div>
 
 </section>
 
 
-<section id="about" class="section">
+<section>
+<h2>News Center</h2>
 
-<div class="container narrow">
-
-<div class="section-heading">
-
-<span class="eyebrow">ABOUT</span>
-
-<h2>About XAUUSD Tools</h2>
-
+<div class="card">
+<p>Review economic news risk before trading.</p>
+<a href="news/index.html">Open News Center</a>
 </div>
 
+</section>
+
+
+<section class="card">
+<h2>Risk Disclaimer</h2>
 <p>
-XAUUSD Tools is a free educational website focused on gold trading
-calculators, trading journals and educational resources.
+Trading financial markets involves significant risk.
+This website provides educational information and calculators
+only. No profit is guaranteed.
 </p>
-
-<p>
-The tools are designed for planning and educational purposes.
-Broker contract specifications, spreads, commissions, leverage,
-margin requirements and execution conditions can differ.
-</p>
-
-<div class="warning">
-
-<strong>⚠️ Risk Disclaimer</strong>
-
-<p>
-Trading forex, gold, CFDs and other leveraged products involves
-substantial risk of loss. No calculator, indicator or strategy
-guarantees profit. Always verify calculations with your broker
-and use appropriate risk management.
-</p>
-
-</div>
-
-</div>
-
 </section>
 
 </main>
 
 
 <footer>
-
-<div class="container footer-grid">
-
-<div>
-<h3>🟡 XAUUSD Tools</h3>
-<p>Free gold trading tools and education.</p>
+<div class="container">
+<p>XAUUSD WEB - 2026</p>
+<p>Gold Trading Tools and Education</p>
 </div>
-
-<div>
-<h4>Tools</h4>
-<a href="#tools">Calculators</a>
-<a href="#journal">Journal</a>
-</div>
-
-<div>
-<h4>Learn</h4>
-<a href="#education">Indicators</a>
-<a href="#risk">Risk Management</a>
-</div>
-
-</div>
-
-<div class="copyright">
-© 2026 XAUUSD Tools. Educational purposes only.
-</div>
-
 </footer>
-
 
 <script src="app.js"></script>
 

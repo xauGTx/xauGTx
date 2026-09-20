@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://xaugtx.github.io/xauGTx/sitemap.xml

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD Price Distance | XAUUSD WEB</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main class="container">
+<h1>XAUUSD Price Distance</h1>
+
+<label>Price 1</label>
+<input id="p1" type="number" value="2650">
+
+<label>Price 2</label>
+<input id="p2" type="number" value="2670">
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+</main>
+
+<script>
+function calc(){
+ const p1=Number(document.getElementById("p1").value);
+ const p2=Number(document.getElementById("p2").value);
+ const distance=Math.abs(p2-p1);
+
+ document.getElementById("result").textContent=
+ "Price Distance: " + distance.toFixed(2);
+}
+</script>
+</body>
+</html>

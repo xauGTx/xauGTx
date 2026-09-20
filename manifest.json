@@ -1,0 +1,9 @@
+﻿{
+  "name": "XAUUSD WEB",
+  "short_name": "XAUUSD WEB",
+  "description": "XAUUSD trading tools and education",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b0f14",
+  "theme_color": "#d4af37"
+}

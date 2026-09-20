@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Risk Reward Calculator | XAUUSD WEB</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main class="container">
+<h1>Risk / Reward Calculator</h1>
+
+<label>Entry</label>
+<input id="entry" type="number" value="2650">
+
+<label>Stop Loss</label>
+<input id="sl" type="number" value="2640">
+
+<label>Take Profit</label>
+<input id="tp" type="number" value="2670">
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+</main>
+
+<script>
+function calc(){
+ const entry=Number(document.getElementById("entry").value);
+ const sl=Number(document.getElementById("sl").value);
+ const tp=Number(document.getElementById("tp").value);
+
+ const risk=Math.abs(entry-sl);
+ const reward=Math.abs(tp-entry);
+
+ if(risk<=0){
+  document.getElementById("result").textContent="Invalid Entry / SL";
+  return;
+ }
+
+ const rr=reward/risk;
+
+ document.getElementById("result").textContent=
+ "Risk: " + risk.toFixed(2) +
+ " | Reward: " + reward.toFixed(2) +
+ " | R:R = 1:" + rr.toFixed(2);
+}
+</script>
+</body>
+</html>

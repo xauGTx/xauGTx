@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profit Loss Calculator | XAUUSD WEB</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main class="container">
+<h1>Profit / Loss Calculator</h1>
+
+<label>Entry Price</label>
+<input id="entry" type="number" value="2650">
+
+<label>Exit Price</label>
+<input id="exit" type="number" value="2670">
+
+<label>Lot Size</label>
+<input id="lot" type="number" value="0.01" step="0.01">
+
+<label>Direction</label>
+<select id="direction">
+<option value="buy">BUY</option>
+<option value="sell">SELL</option>
+</select>
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+</main>
+
+<script>
+function calc(){
+ const entry=Number(document.getElementById("entry").value);
+ const exit=Number(document.getElementById("exit").value);
+ const lot=Number(document.getElementById("lot").value);
+ const direction=document.getElementById("direction").value;
+
+ let diff=direction==="buy" ? exit-entry : entry-exit;
+ const profit=diff*lot*100;
+
+ document.getElementById("result").textContent=
+ "Estimated P/L: $" + profit.toFixed(2);
+}
+</script>
+</body>
+</html>

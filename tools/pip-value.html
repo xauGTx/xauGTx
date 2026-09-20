@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD Pip Value | XAUUSD WEB</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main class="container">
+<h1>XAUUSD Pip Value Calculator</h1>
+
+<label>Lot Size</label>
+<input id="lot" type="number" value="0.01" step="0.01">
+
+<label>Price Movement</label>
+<input id="move" type="number" value="1">
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+</main>
+
+<script>
+function calc(){
+ const lot=Number(document.getElementById("lot").value);
+ const move=Number(document.getElementById("move").value);
+
+ const value=move*lot*100;
+
+ document.getElementById("result").textContent=
+ "Estimated Value: $" + value.toFixed(2);
+}
+</script>
+</body>
+</html>

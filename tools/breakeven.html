@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Breakeven Calculator | XAUUSD WEB</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main class="container">
+<h1>Breakeven Calculator</h1>
+
+<label>Entry Price</label>
+<input id="entry" type="number" value="2650">
+
+<label>Direction</label>
+<select id="direction">
+<option value="buy">BUY</option>
+<option value="sell">SELL</option>
+</select>
+
+<label>Extra Buffer</label>
+<input id="buffer" type="number" value="0.20" step="0.01">
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+</main>
+
+<script>
+function calc(){
+ const entry=Number(document.getElementById("entry").value);
+ const buffer=Number(document.getElementById("buffer").value);
+ const direction=document.getElementById("direction").value;
+
+ const breakeven=
+ direction==="buy" ? entry+buffer : entry-buffer;
+
+ document.getElementById("result").textContent=
+ "Breakeven Level: " + breakeven.toFixed(2);
+}
+</script>
+</body>
+</html>

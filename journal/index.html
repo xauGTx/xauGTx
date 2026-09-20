@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trading Journal | XAUUSD WEB</title>
+<meta name="description" content="Free XAUUSD trading journal for recording entries, risk, results and notes.">
+<link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+<h1>📒 XAUUSD Trading Journal</h1>
+
+<p>Record your trades and review your trading process.</p>
+
+<div class="card">
+
+<label>Date / Time</label>
+<input id="date" type="datetime-local">
+
+<label>Symbol</label>
+<input id="symbol" value="XAUUSD">
+
+<label>Direction</label>
+<select id="direction">
+<option value="BUY">BUY</option>
+<option value="SELL">SELL</option>
+<option value="WAIT">WAIT</option>
+</select>
+
+<label>Timeframe</label>
+<select id="timeframe">
+<option>M5</option>
+<option>M15</option>
+<option>H1</option>
+<option>H4</option>
+<option>D1</option>
+</select>
+
+<label>Entry</label>
+<input id="entry" type="number" step="0.01">
+
+<label>Stop Loss</label>
+<input id="sl" type="number" step="0.01">
+
+<label>Take Profit</label>
+<input id="tp" type="number" step="0.01">
+
+<label>Risk %</label>
+<input id="risk" type="number" step="0.1">
+
+<label>Result</label>
+<select id="result">
+<option>WIN</option>
+<option>LOSS</option>
+<option>BREAKEVEN</option>
+<option>OPEN</option>
+</select>
+
+<label>Reason / Notes</label>
+<textarea id="notes" rows="5" placeholder="EMA, RSI, MACD, BOS, liquidity, OB, FVG..."></textarea>
+
+<button onclick="saveTrade()">Save Trade</button>
+<button onclick="clearJournal()">Clear Journal</button>
+
+</div>
+
+<h2>Trade History</h2>
+
+<div id="journal"></div>
+
+</main>
+
+<script>
+
+function getTrades(){
+ return JSON.parse(localStorage.getItem("xauusd_journal") || "[]");
+}
+
+function saveTrade(){
+
+ const trade={
+  date:document.getElementById("date").value,
+  symbol:document.getElementById("symbol").value,
+  direction:document.getElementById("direction").value,
+  timeframe:document.getElementById("timeframe").value,
+  entry:document.getElementById("entry").value,
+  sl:document.getElementById("sl").value,
+  tp:document.getElementById("tp").value,
+  risk:document.getElementById("risk").value,
+  result:document.getElementById("result").value,
+  notes:document.getElementById("notes").value
+ };
+
+ const trades=getTrades();
+
+ trades.push(trade);
+
+ localStorage.setItem(
+  "xauusd_journal",
+  JSON.stringify(trades)
+ );
+
+ document.getElementById("notes").value="";
+
+ renderJournal();
+}
+
+function renderJournal(){
+
+ const trades=getTrades();
+ const box=document.getElementById("journal");
+
+ if(trades.length===0){
+  box.innerHTML="<p>No trades recorded yet.</p>";
+  return;
+ }
+
+ box.innerHTML="";
+
+ trades.forEach((t,index)=>{
+
+  const card=document.createElement("div");
+  card.className="card";
+
+  card.innerHTML=`
+  <h3>${t.direction} — ${t.symbol}</h3>
+  <p><b>Date:</b> ${t.date || "-"}</p>
+  <p><b>Timeframe:</b> ${t.timeframe}</p>
+  <p><b>Entry:</b> ${t.entry || "-"}</p>
+  <p><b>SL:</b> ${t.sl || "-"}</p>
+  <p><b>TP:</b> ${t.tp || "-"}</p>
+  <p><b>Risk:</b> ${t.risk || "-"}%</p>
+  <p><b>Result:</b> ${t.result}</p>
+  <p><b>Notes:</b> ${t.notes || "-"}</p>
+  <button onclick="deleteTrade(${index})">Delete</button>
+  `;
+
+  box.appendChild(card);
+ });
+}
+
+function deleteTrade(index){
+
+ const trades=getTrades();
+
+ trades.splice(index,1);
+
+ localStorage.setItem(
+  "xauusd_journal",
+  JSON.stringify(trades)
+ );
+
+ renderJournal();
+}
+
+function clearJournal(){
+
+ if(!confirm("Delete all journal records?")){
+  return;
+ }
+
+ localStorage.removeItem("xauusd_journal");
+
+ renderJournal();
+}
+
+renderJournal();
+
+</script>
+
+</body>
+</html>

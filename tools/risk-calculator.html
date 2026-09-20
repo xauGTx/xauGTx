@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Risk Calculator | XAUUSD WEB</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main class="container">
+<h1>Risk Calculator</h1>
+<p>Calculate the maximum money you want to risk on a trade.</p>
+
+<label>Account Balance</label>
+<input id="balance" type="number" value="100">
+
+<label>Risk %</label>
+<input id="risk" type="number" value="1" step="0.1">
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+</main>
+
+<script>
+function calc(){
+ const balance=Number(document.getElementById("balance").value);
+ const risk=Number(document.getElementById("risk").value);
+ const money=balance*risk/100;
+ document.getElementById("result").textContent=
+ "Maximum Risk: $" + money.toFixed(2);
+}
+</script>
+</body>
+</html>

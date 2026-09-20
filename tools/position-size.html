@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Position Size | XAUUSD WEB</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main class="container">
+<h1>Position Size Calculator</h1>
+
+<label>Account Balance</label>
+<input id="balance" type="number" value="100">
+
+<label>Risk %</label>
+<input id="risk" type="number" value="1" step="0.1">
+
+<label>Entry Price</label>
+<input id="entry" type="number" value="2650">
+
+<label>Stop Loss</label>
+<input id="sl" type="number" value="2640">
+
+<button onclick="calc()">Calculate</button>
+
+<h2 id="result"></h2>
+</main>
+
+<script>
+function calc(){
+ const balance=Number(document.getElementById("balance").value);
+ const risk=Number(document.getElementById("risk").value);
+ const entry=Number(document.getElementById("entry").value);
+ const sl=Number(document.getElementById("sl").value);
+
+ const riskMoney=balance*risk/100;
+ const distance=Math.abs(entry-sl);
+
+ if(distance<=0){
+  document.getElementById("result").textContent="Invalid Stop Loss";
+  return;
+ }
+
+ const lots=riskMoney/(distance*100);
+
+ document.getElementById("result").textContent=
+ "Suggested Lot Size: " + lots.toFixed(3);
+}
+</script>
+</body>
+</html>
