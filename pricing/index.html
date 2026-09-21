@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XAUUSD V15 Plans</title>
+<style>
+body{
+margin:0;
+background:#07111f;
+color:#eaf2ff;
+font-family:Arial,sans-serif
+}
+.container{
+max-width:1100px;
+margin:auto;
+padding:40px 20px
+}
+h1{text-align:center}
+.sub{
+text-align:center;
+color:#8fa4bf;
+margin-bottom:35px
+}
+.plans{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px
+}
+.card{
+background:#0d1b2e;
+border:1px solid #20344e;
+border-radius:15px;
+padding:25px
+}
+.card h2{margin-top:0}
+.price{
+font-size:32px;
+font-weight:bold;
+margin:20px 0
+}
+ul{
+line-height:2;
+padding-left:20px
+}
+button{
+width:100%;
+padding:13px;
+border:0;
+border-radius:8px;
+background:#2678ff;
+color:white;
+font-weight:bold;
+cursor:pointer
+}
+.free button{
+background:#29415e
+}
+.warning{
+margin-top:30px;
+padding:15px;
+background:#172237;
+border-radius:10px;
+color:#b9c8da;
+text-align:center
+}
+@media(max-width:800px){
+.plans{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🥇 XAUUSD V15</h1>
+<div class="sub">
+AI Market Analysis & Trading Intelligence
+</div>
+
+<div class="plans">
+
+<div class="card free">
+<h2>FREE</h2>
+<div class="price">$0</div>
+
+<ul>
+<li>Live Gold Price</li>
+<li>Basic BUY / SELL / WAIT</li>
+<li>Basic Technical Analysis</li>
+<li>Market Dashboard</li>
+</ul>
+
+<button onclick="location.href='../market/chart-history.html'">
+OPEN FREE DASHBOARD
+</button>
+</div>
+
+<div class="card">
+<h2>V15 PRO</h2>
+<div class="price">$9.99 / month</div>
+
+<ul>
+<li>V15 AI Signal</li>
+<li>Confidence</li>
+<li>MTF Analysis</li>
+<li>SMC Analysis</li>
+<li>Risk Analysis</li>
+<li>Entry / SL / TP</li>
+<li>News Risk</li>
+</ul>
+
+<button onclick="alert('PRO checkout will be connected next.')">
+GET PRO
+</button>
+</div>
+
+<div class="card">
+<h2>V15 PREMIUM</h2>
+<div class="price">$19.99 / month</div>
+
+<ul>
+<li>Everything in PRO</li>
+<li>Telegram Alerts</li>
+<li>Advanced Signal Data</li>
+<li>Trade Journal</li>
+<li>Performance Reports</li>
+<li>Priority Features</li>
+</ul>
+
+<button onclick="alert('PREMIUM checkout will be connected next.')">
+GET PREMIUM
+</button>
+</div>
+
+</div>
+
+<div class="warning">
+V15 provides market analysis and educational tools.
+Trading involves risk. No profit or win-rate is guaranteed.
+</div>
+
+</div>
+
+</body>
+</html>
