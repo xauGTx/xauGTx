@@ -3,831 +3,412 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>XAUUSD Chart & Signal History</title>
-<meta name="description" content="XAUUSD price chart, BUY SELL WAIT signal log and trading signal history.">
-<link rel="stylesheet" href="../style.css">
-
+<title>XAUUSD V15 Live Chart Dashboard</title>
 <style>
-.panel{
-background:#111820;
-border:1px solid #2b3742;
-border-radius:16px;
-padding:20px;
-margin:20px 0;
-}
-
-.chart-wrap{
-height:360px;
-position:relative;
-overflow:hidden;
-border:1px solid #293540;
-border-radius:12px;
-background:#0b0f14;
-}
-
-canvas{
-width:100%;
-height:100%;
-display:block;
-}
-
-.controls{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:12px;
-}
-
-input,select{
-width:100%;
-box-sizing:border-box;
-padding:11px;
-border-radius:8px;
-border:1px solid #35414d;
-background:#0b0f14;
-color:white;
-}
-
-button{
-padding:11px 16px;
-border:0;
-border-radius:8px;
-cursor:pointer;
-font-weight:700;
-margin:4px;
-}
-
-.buy{
-color:#35d07f;
-font-weight:800;
-}
-
-.sell{
-color:#ff6464;
-font-weight:800;
-}
-
-.wait{
-color:#f0c75e;
-font-weight:800;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-gap:12px;
-}
-
-.stat{
-padding:16px;
-border-radius:12px;
-background:#0b0f14;
-border:1px solid #293540;
-}
-
-.stat small{
-display:block;
-color:#9ca8b4;
-margin-bottom:6px;
-}
-
-.stat strong{
-font-size:22px;
-}
-
-.table-wrap{
-overflow-x:auto;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-min-width:650px;
-}
-
-th,td{
-padding:11px;
-border-bottom:1px solid #293540;
-text-align:left;
-}
-
-.note{
-color:#9ca8b4;
-font-size:14px;
-line-height:1.6;
-}
-
-.empty{
-text-align:center;
-padding:25px;
-color:#9ca8b4;
-}
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#eaf2ff;font-family:Arial,sans-serif}
+header{padding:22px;background:#0b1728;border-bottom:1px solid #20324a}
+.container{max-width:1250px;margin:auto;padding:20px}
+h1{margin:0 0 6px}.sub,.small,.status{color:#8fa4bf}
+.top,.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.top{grid-template-columns:repeat(5,1fr);margin-bottom:16px}
+.card,.main{background:#0d1b2e;border:1px solid #20344e;border-radius:12px;padding:15px}
+.label{color:#849bb5;font-size:12px;text-transform:uppercase;margin-bottom:7px}
+.value{font-size:21px;font-weight:bold}
+.signal{font-size:28px;font-weight:bold}
+.buy{color:#36d98b}.sell{color:#ff5c70}.wait{color:#ffd166}.error{color:#ff8b8b}
+.main{padding:15px}
+.chart-head{display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}
+.chart-title{font-size:18px;font-weight:bold}
+canvas{width:100%;height:480px;background:#081321;border-radius:10px;display:block}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button,input{border:1px solid #29415e;background:#101f33;color:#eaf2ff;padding:10px 12px;border-radius:8px}
+button{cursor:pointer}input{min-width:280px}
+.warning{margin-top:16px;padding:12px;background:#172237;border-radius:9px;color:#b9c8da}
+footer{text-align:center;color:#6f849e;padding:25px;font-size:12px}
+@media(max-width:900px){.top,.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.top,.grid{grid-template-columns:1fr}canvas{height:360px}}
 </style>
 </head>
-
 <body>
 
 <header>
 <div class="container">
-
-<h1>XAUUSD CHART & SIGNAL HISTORY</h1>
-<p>Price chart • BUY • SELL • WAIT • History</p>
-
-<nav>
-<a href="../index.html">Home</a>
-<a href="technical-signal.html">Technical Signal</a>
-<a href="dashboard.html">Live Price</a>
-<a href="../journal/index.html">Journal</a>
-</nav>
-
+<h1>🥇 XAUUSD V15 Live Chart Dashboard</h1>
+<div class="sub">V15 Signal + XAUUSD Price + Entry / SL / TP</div>
 </div>
 </header>
 
+<div class="container">
 
-<main class="container">
+<div class="top">
 
-<section class="panel">
-
-<h2>XAUUSD Price Chart</h2>
-
-<div class="chart-wrap">
-<canvas id="priceChart"></canvas>
+<div class="card">
+<div class="label">XAUUSD Price</div>
+<div id="price" class="value">--</div>
 </div>
 
-<p class="note">
-Chart data ខាងក្រោមគឺជា price points ដែលអ្នកបញ្ចូល។
-វាមិនមែនជា live market feed ទេ។
-</p>
+<div class="card">
+<div class="label">V15 Signal</div>
+<div id="signal" class="signal wait">WAIT</div>
+</div>
 
-</section>
+<div class="card">
+<div class="label">Confidence</div>
+<div id="confidence" class="value">0%</div>
+</div>
 
+<div class="card">
+<div class="label">Symbol</div>
+<div id="symbol" class="value">XAUUSDm</div>
+</div>
 
-<section class="panel">
+<div class="card">
+<div class="label">Status</div>
+<div id="status" class="value">STARTING</div>
+</div>
 
-<h2>Add Price Point</h2>
+</div>
+
+<div class="main">
+
+<div class="chart-head">
+<div>
+<div class="chart-title">XAUUSD Live Price</div>
+<div id="chartInfo" class="status">Waiting for data...</div>
+</div>
+<div id="lastUpdate" class="status">Last update: --</div>
+</div>
+
+<canvas id="chart"></canvas>
 
 <div class="controls">
-
-<div>
-<label>Price</label>
-<input id="priceInput" type="number" step="0.01" placeholder="3650.00">
-</div>
-
-<div>
-<label>Signal</label>
-<select id="signalInput">
-<option value="WAIT">WAIT</option>
-<option value="BUY">BUY</option>
-<option value="SELL">SELL</option>
-</select>
+<input id="apiKey" type="password" placeholder="Metals.Dev API Key">
+<button onclick="saveApiKey()">Save API Key</button>
+<button onclick="clearChart()">Clear Chart</button>
 </div>
 
 </div>
 
-<button onclick="addPrice()">ADD PRICE</button>
-<button onclick="clearPrices()">CLEAR CHART</button>
+<div class="grid">
 
-</section>
-
-
-<section class="panel">
-
-<h2>Current Statistics</h2>
-
-<div class="stats">
-
-<div class="stat">
-<small>Latest Price</small>
-<strong id="latestPrice">--</strong>
+<div class="card">
+<div class="label">Entry</div>
+<div id="entry" class="value">--</div>
 </div>
 
-<div class="stat">
-<small>Price Points</small>
-<strong id="pointCount">0</strong>
+<div class="card">
+<div class="label">Stop Loss</div>
+<div id="sl" class="value">--</div>
 </div>
 
-<div class="stat">
-<small>BUY Logs</small>
-<strong id="buyCount">0</strong>
+<div class="card">
+<div class="label">Take Profit</div>
+<div id="tp" class="value">--</div>
 </div>
 
-<div class="stat">
-<small>SELL Logs</small>
-<strong id="sellCount">0</strong>
+<div class="card">
+<div class="label">MTF</div>
+<div id="mtf" class="value">UNKNOWN</div>
 </div>
 
-<div class="stat">
-<small>WAIT Logs</small>
-<strong id="waitCount">0</strong>
+<div class="card">
+<div class="label">Technical</div>
+<div id="technical" class="value">UNKNOWN</div>
 </div>
 
+<div class="card">
+<div class="label">SMC</div>
+<div id="smc" class="value">UNKNOWN</div>
 </div>
 
-</section>
-
-
-<section class="panel">
-
-<h2>Signal Log</h2>
-
-<div class="controls">
-
-<div>
-<label>Price</label>
-<input id="logPrice" type="number" step="0.01" placeholder="3650.00">
+<div class="card">
+<div class="label">Risk</div>
+<div id="risk" class="value">UNKNOWN</div>
 </div>
 
-<div>
-<label>Signal</label>
-<select id="logSignal">
-<option value="BUY">BUY</option>
-<option value="SELL">SELL</option>
-<option value="WAIT">WAIT</option>
-</select>
-</div>
-
-<div>
-<label>Timeframe</label>
-<select id="logTF">
-<option>M5</option>
-<option>M15</option>
-<option>H1</option>
-<option>H4</option>
-<option>D1</option>
-</select>
-</div>
-
-<div>
-<label>Confidence %</label>
-<input id="logConfidence" type="number" min="0" max="100" step="1" placeholder="70">
+<div class="card">
+<div class="label">News</div>
+<div id="news" class="value">UNKNOWN</div>
 </div>
 
 </div>
 
-<div>
-<label>Reason</label>
-<input id="logReason" type="text" placeholder="EMA + RSI + MACD agreement">
+<div class="warning">
+<b>V15 Safety:</b>
+GitHub Pages បង្ហាញ Analysis និង Market Data ប៉ុណ្ណោះ។
+Real Trading និង MT5 Order Send មិនត្រូវបានគ្រប់គ្រងដោយ Website នេះទេ។
 </div>
-
-<button onclick="addLog()">SAVE SIGNAL</button>
-<button onclick="clearLogs()">CLEAR SIGNAL HISTORY</button>
-
-</section>
-
-
-<section class="panel">
-
-<h2>BUY / SELL / WAIT History</h2>
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-<tr>
-<th>Date / Time</th>
-<th>Signal</th>
-<th>Price</th>
-<th>TF</th>
-<th>Confidence</th>
-<th>Reason</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody id="historyBody"></tbody>
-
-</table>
 
 </div>
 
-<div id="empty" class="empty">
-No signal history yet.
-</div>
-
-</section>
-
-
-<section class="panel">
-
-<h2>How it works</h2>
-
-<p class="note">
-1. បញ្ចូល XAUUSD price point ដើម្បីបង្កើត chart។<br>
-2. ជ្រើស BUY / SELL / WAIT។<br>
-3. Save signal ដើម្បីរក្សាទុក history។<br>
-4. History ត្រូវបានរក្សាទុកក្នុង browser localStorage។<br>
-5. Clear browser storage ឬ Clear History អាចលុបទិន្នន័យបាន។
-</p>
-
-<p class="note">
-⚠️ BUY / SELL / WAIT នៅទីនេះគឺជា signal log សម្រាប់ការវិភាគ
-និង journal ប៉ុណ្ណោះ។ វាមិនបើក trade ដោយស្វ័យប្រវត្តិទេ។
-</p>
-
-</section>
-
-</main>
-
+<footer>
+XAUUSD V15 Dashboard • Analysis display only
+</footer>
 
 <script>
+const SIGNAL_URL="../v15_signal.json";
+const STORAGE="xauusd_v15_chart_v1";
+const API_KEY="metals_dev_api_key";
 
-const PRICE_KEY = "xauusd_chart_prices_v1";
-const LOG_KEY = "xauusd_signal_logs_v1";
+let prices=[];
+let v15={};
 
-let prices =
-JSON.parse(localStorage.getItem(PRICE_KEY) || "[]");
+const canvas=document.getElementById("chart");
+const ctx=canvas.getContext("2d");
 
-let logs =
-JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
-
-
-function saveData(){
-
-localStorage.setItem(
-PRICE_KEY,
-JSON.stringify(prices)
-);
-
-localStorage.setItem(
-LOG_KEY,
-JSON.stringify(logs)
-);
-
+function resize(){
+const r=canvas.getBoundingClientRect();
+const d=window.devicePixelRatio||1;
+canvas.width=r.width*d;
+canvas.height=r.height*d;
+ctx.setTransform(d,0,0,d,0,0);
+draw();
 }
 
+window.addEventListener("resize",resize);
 
-function addPrice(){
-
-const value =
-Number(document.getElementById("priceInput").value);
-
-const signal =
-document.getElementById("signalInput").value;
-
-if(!value || value<=0){
-
-alert("Please enter a valid XAUUSD price.");
-
-return;
+function saveApiKey(){
+const k=document.getElementById("apiKey").value.trim();
+if(!k)return alert("សូមបញ្ចូល API Key");
+localStorage.setItem(API_KEY,k);
+alert("API Key បានរក្សាទុកក្នុង Browser");
+loadPrice();
 }
 
-prices.push({
-
-time:new Date().toISOString(),
-price:value,
-signal:signal
-
-});
-
-saveData();
-
-document.getElementById("priceInput").value="";
-
-drawChart();
-updateStats();
-
+function loadHistory(){
+try{
+prices=JSON.parse(localStorage.getItem(STORAGE)||"[]");
+if(!Array.isArray(prices))prices=[];
+}catch{prices=[]}
 }
 
-
-function clearPrices(){
-
-if(!confirm("Clear all chart price points?")){
-
-return;
+function saveHistory(){
+if(prices.length>500)prices=prices.slice(-500);
+localStorage.setItem(STORAGE,JSON.stringify(prices));
 }
 
+function clearChart(){
+if(confirm("លុប Chart History ទាំងអស់?")){
 prices=[];
-
-saveData();
-
-drawChart();
-updateStats();
-
+saveHistory();
+draw();
+}
 }
 
-
-function addLog(){
-
-const price =
-Number(document.getElementById("logPrice").value);
-
-const signal =
-document.getElementById("logSignal").value;
-
-const tf =
-document.getElementById("logTF").value;
-
-const confidence =
-Number(document.getElementById("logConfidence").value || 0);
-
-const reason =
-document.getElementById("logReason").value.trim();
-
-if(!price || price<=0){
-
-alert("Please enter a valid price.");
-
-return;
+function addPrice(price){
+if(!Number.isFinite(price))return;
+prices.push({
+time:Date.now(),
+price,
+signal:String(v15.signal||"WAIT").toUpperCase()
+});
+saveHistory();
+draw();
 }
 
-logs.unshift({
+function num(v){
+const n=Number(v);
+return Number.isFinite(n)?n.toFixed(3):"--";
+}
 
-id:Date.now(),
+async function loadV15(){
 
-time:new Date().toLocaleString(),
+try{
 
-signal:signal,
-
-price:price,
-
-tf:tf,
-
-confidence:confidence,
-
-reason:reason || "Manual signal log"
-
+const r=await fetch(SIGNAL_URL+"?t="+Date.now(),{
+cache:"no-store"
 });
 
-saveData();
+if(!r.ok)throw new Error("V15 signal unavailable");
 
-document.getElementById("logPrice").value="";
-document.getElementById("logConfidence").value="";
-document.getElementById("logReason").value="";
+v15=await r.json();
 
-renderLogs();
-updateStats();
+const signal=String(v15.signal||"WAIT").toUpperCase();
+
+const s=document.getElementById("signal");
+s.textContent=signal;
+s.className="signal "+
+(signal==="BUY"?"buy":signal==="SELL"?"sell":"wait");
+
+document.getElementById("symbol").textContent=
+v15.symbol||"XAUUSDm";
+
+document.getElementById("confidence").textContent=
+Number(v15.confidence||0).toFixed(2)+"%";
+
+document.getElementById("entry").textContent=num(v15.entry);
+document.getElementById("sl").textContent=num(v15.sl);
+document.getElementById("tp").textContent=num(v15.tp);
+
+document.getElementById("mtf").textContent=v15.mtf||"UNKNOWN";
+document.getElementById("technical").textContent=v15.technical||"UNKNOWN";
+document.getElementById("smc").textContent=v15.smc||"UNKNOWN";
+document.getElementById("risk").textContent=v15.risk||"UNKNOWN";
+document.getElementById("news").textContent=v15.news||"UNKNOWN";
+
+if(v15.timestamp){
+document.getElementById("lastUpdate").textContent=
+"V15 update: "+new Date(v15.timestamp).toLocaleTimeString();
+}
+
+}catch(e){
+document.getElementById("signal").textContent="NO DATA";
+document.getElementById("signal").className="signal error";
+}
 
 }
 
+async function loadPrice(){
 
-function deleteLog(id){
+const key=localStorage.getItem(API_KEY);
 
-logs =
-logs.filter(
-item => item.id !== id
-);
+if(!key){
+document.getElementById("status").textContent="API KEY";
+return;
+}
 
-saveData();
+try{
 
-renderLogs();
-updateStats();
+const url=
+"https://api.metals.dev/v1/metal/spot"+
+"?api_key="+encodeURIComponent(key)+
+"&metal=gold&currency=USD";
+
+const r=await fetch(url,{cache:"no-store"});
+const data=await r.json();
+
+if(!r.ok||data.status!=="success"){
+throw new Error(data.error||"API error");
+}
+
+const price=Number(data.rate.price);
+
+if(!Number.isFinite(price))throw new Error("Invalid price");
+
+document.getElementById("price").textContent=
+price.toFixed(2);
+
+document.getElementById("status").textContent="LIVE";
+document.getElementById("status").className="value buy";
+
+document.getElementById("chartInfo").textContent=
+"Gold Spot • USD";
+
+document.getElementById("lastUpdate").textContent=
+"Price update: "+new Date().toLocaleTimeString();
+
+addPrice(price);
+
+}catch(e){
+
+document.getElementById("status").textContent="ERROR";
+document.getElementById("status").className="value error";
+document.getElementById("chartInfo").textContent=
+"Price Error: "+e.message;
 
 }
 
+}
 
-function clearLogs(){
+function draw(){
 
-if(!confirm("Clear all signal history?")){
+const r=canvas.getBoundingClientRect();
+const w=r.width;
+const h=r.height;
+
+ctx.clearRect(0,0,w,h);
+
+if(prices.length<2){
+
+ctx.fillStyle="#7187a2";
+ctx.font="14px Arial";
+ctx.textAlign="center";
+ctx.fillText("Waiting for XAUUSD data...",w/2,h/2);
 
 return;
 }
 
-logs=[];
+const data=prices.slice(-200);
+const vals=data.map(x=>Number(x.price));
 
-saveData();
+let min=Math.min(...vals);
+let max=Math.max(...vals);
+let range=Math.max(max-min,.01);
 
-renderLogs();
-updateStats();
+min-=range*.12;
+max+=range*.12;
 
-}
+const L=65,R=20,T=25,B=35;
+const W=w-L-R;
+const H=h-T-B;
 
-
-function signalClass(signal){
-
-if(signal==="BUY") return "buy";
-
-if(signal==="SELL") return "sell";
-
-return "wait";
-
-}
-
-
-function renderLogs(){
-
-const body =
-document.getElementById("historyBody");
-
-const empty =
-document.getElementById("empty");
-
-body.innerHTML="";
-
-if(logs.length===0){
-
-empty.style.display="block";
-
-return;
-
-}
-
-empty.style.display="none";
-
-logs.forEach(item=>{
-
-const row =
-document.createElement("tr");
-
-row.innerHTML=`
-
-<td>${escapeHTML(item.time)}</td>
-
-<td class="${signalClass(item.signal)}">
-${escapeHTML(item.signal)}
-</td>
-
-<td>${Number(item.price).toFixed(2)}</td>
-
-<td>${escapeHTML(item.tf)}</td>
-
-<td>${Number(item.confidence)}%</td>
-
-<td>${escapeHTML(item.reason)}</td>
-
-<td>
-<button onclick="deleteLog(${item.id})">
-Delete
-</button>
-</td>
-
-`;
-
-body.appendChild(row);
-
-});
-
-}
-
-
-function escapeHTML(value){
-
-return String(value)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
-}
-
-
-function updateStats(){
-
-const latest =
-prices.length
-? prices[prices.length-1].price
-: null;
-
-document.getElementById("latestPrice")
-.textContent =
-latest
-? Number(latest).toFixed(2)
-: "--";
-
-document.getElementById("pointCount")
-.textContent =
-prices.length;
-
-document.getElementById("buyCount")
-.textContent =
-logs.filter(x=>x.signal==="BUY").length;
-
-document.getElementById("sellCount")
-.textContent =
-logs.filter(x=>x.signal==="SELL").length;
-
-document.getElementById("waitCount")
-.textContent =
-logs.filter(x=>x.signal==="WAIT").length;
-
-}
-
-
-function drawChart(){
-
-const canvas =
-document.getElementById("priceChart");
-
-const rect =
-canvas.getBoundingClientRect();
-
-const dpr =
-window.devicePixelRatio || 1;
-
-canvas.width =
-rect.width*dpr;
-
-canvas.height =
-rect.height*dpr;
-
-const ctx =
-canvas.getContext("2d");
-
-ctx.scale(dpr,dpr);
-
-const width=rect.width;
-const height=rect.height;
-
-ctx.clearRect(
-0,
-0,
-width,
-height
-);
-
-
-/* Grid */
-
-ctx.strokeStyle="#293540";
+ctx.strokeStyle="#18304a";
 ctx.lineWidth=1;
 
-for(let i=1;i<6;i++){
+for(let i=0;i<5;i++){
 
-const y=
-(i/6)*height;
+const y=T+(H/4)*i;
 
 ctx.beginPath();
-ctx.moveTo(0,y);
-ctx.lineTo(width,y);
+ctx.moveTo(L,y);
+ctx.lineTo(w-R,y);
 ctx.stroke();
 
+const value=max-((max-min)/4)*i;
+
+ctx.fillStyle="#7187a2";
+ctx.font="11px Arial";
+ctx.textAlign="right";
+ctx.fillText(value.toFixed(2),L-8,y+4);
 }
-
-for(let i=1;i<10;i++){
-
-const x=
-(i/10)*width;
-
-ctx.beginPath();
-ctx.moveTo(x,0);
-ctx.lineTo(x,height);
-ctx.stroke();
-
-}
-
-
-/* Empty */
-
-if(prices.length===0){
-
-ctx.fillStyle="#9ca8b4";
-ctx.font="16px Arial";
-ctx.textAlign="center";
-
-ctx.fillText(
-"Add price points to create the chart",
-width/2,
-height/2
-);
-
-return;
-
-}
-
-
-const values =
-prices.map(x=>Number(x.price));
-
-let min =
-Math.min(...values);
-
-let max =
-Math.max(...values);
-
-if(min===max){
-
-min-=1;
-max+=1;
-
-}
-
-const padding=35;
-
-const chartW =
-width-padding*2;
-
-const chartH =
-height-padding*2;
-
-
-function xPos(i){
-
-if(values.length===1){
-
-return width/2;
-
-}
-
-return padding+
-(i/(values.length-1))*chartW;
-
-}
-
-
-function yPos(value){
-
-return padding+
-((max-value)/(max-min))*chartH;
-
-}
-
-
-/* Price line */
-
-ctx.strokeStyle="#d4af37";
-ctx.lineWidth=2.5;
 
 ctx.beginPath();
 
-values.forEach((value,i)=>{
+data.forEach((p,i)=>{
 
-const x=xPos(i);
-const y=yPos(value);
+const x=L+(i/(data.length-1))*W;
+const y=T+((max-p.price)/(max-min))*H;
 
-if(i===0){
-
-ctx.moveTo(x,y);
-
-}else{
-
-ctx.lineTo(x,y);
-
-}
+if(i===0)ctx.moveTo(x,y);
+else ctx.lineTo(x,y);
 
 });
 
+ctx.strokeStyle="#58a6ff";
+ctx.lineWidth=2;
 ctx.stroke();
 
+data.forEach((p,i)=>{
 
-/* Points */
+const x=L+(i/(data.length-1))*W;
+const y=T+((max-p.price)/(max-min))*H;
 
-values.forEach((value,i)=>{
-
-const item=prices[i];
-
-const x=xPos(i);
-const y=yPos(value);
+if(p.signal==="BUY")ctx.fillStyle="#36d98b";
+else if(p.signal==="SELL")ctx.fillStyle="#ff5c70";
+else ctx.fillStyle="#ffd166";
 
 ctx.beginPath();
-
-ctx.arc(
-x,
-y,
-4,
-0,
-Math.PI*2
-);
-
-if(item.signal==="BUY"){
-
-ctx.fillStyle="#35d07f";
-
-}else if(item.signal==="SELL"){
-
-ctx.fillStyle="#ff6464";
-
-}else{
-
-ctx.fillStyle="#f0c75e";
-
-}
-
+ctx.arc(x,y,4,0,Math.PI*2);
 ctx.fill();
 
 });
 
-
-/* Labels */
-
-ctx.fillStyle="#9ca8b4";
-ctx.font="12px Arial";
-
-ctx.textAlign="left";
-
-ctx.fillText(
-max.toFixed(2),
-5,
-padding
-);
-
-ctx.fillText(
-min.toFixed(2),
-5,
-height-padding
-);
-
 }
 
+async function refresh(){
+await loadV15();
+await loadPrice();
+}
 
-window.addEventListener(
-"resize",
-drawChart
-);
+const saved=localStorage.getItem(API_KEY);
+if(saved)document.getElementById("apiKey").value=saved;
 
-renderLogs();
-updateStats();
-drawChart();
+loadHistory();
+resize();
+refresh();
 
+setInterval(refresh,10000);
 </script>
 
 </body>
