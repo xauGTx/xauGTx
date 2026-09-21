@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V15 XAUUSD Master AI</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#0b1020;
+    color:#fff;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:25px;
+}
+
+.header{
+    padding:25px;
+    border-radius:18px;
+    background:#141b31;
+    margin-bottom:20px;
+}
+
+.header h1{
+    margin:0 0 8px;
+}
+
+.status{
+    color:#6ee7b7;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.card{
+    background:#141b31;
+    border:1px solid #26314f;
+    border-radius:16px;
+    padding:20px;
+}
+
+.label{
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.value{
+    margin-top:8px;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.signal{
+    font-size:42px;
+}
+
+.buy{color:#22c55e}
+.sell{color:#ef4444}
+.wait{color:#facc15}
+
+.info{
+    margin-top:20px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid #26314f;
+}
+
+.footer{
+    margin-top:20px;
+    color:#94a3b8;
+    font-size:13px;
+}
+
+@media(max-width:800px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>🤖 V15 XAUUSD MASTER AI</h1>
+        <div class="status" id="connection">Checking V15...</div>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="label">SIGNAL</div>
+            <div id="signal" class="value signal wait">WAIT</div>
+        </div>
+
+        <div class="card">
+            <div class="label">CONFIDENCE</div>
+            <div id="confidence" class="value">0%</div>
+        </div>
+
+        <div class="card">
+            <div class="label">ENTRY</div>
+            <div id="entry" class="value">---</div>
+        </div>
+
+        <div class="card">
+            <div class="label">SYMBOL</div>
+            <div id="symbol" class="value">XAUUSDm</div>
+        </div>
+
+    </div>
+
+    <div class="card info">
+
+        <div class="row">
+            <span>SL</span>
+            <strong id="sl">---</strong>
+        </div>
+
+        <div class="row">
+            <span>TP</span>
+            <strong id="tp">---</strong>
+        </div>
+
+        <div class="row">
+            <span>MTF</span>
+            <strong id="mtf">---</strong>
+        </div>
+
+        <div class="row">
+            <span>Technical</span>
+            <strong id="technical">---</strong>
+        </div>
+
+        <div class="row">
+            <span>SMC</span>
+            <strong id="smc">---</strong>
+        </div>
+
+        <div class="row">
+            <span>Risk</span>
+            <strong id="risk">---</strong>
+        </div>
+
+        <div class="row">
+            <span>News</span>
+            <strong id="news">---</strong>
+        </div>
+
+        <div class="row">
+            <span>Mode</span>
+            <strong id="mode">---</strong>
+        </div>
+
+        <div class="row">
+            <span>Real Trading</span>
+            <strong id="realTrading">---</strong>
+        </div>
+
+        <div class="row">
+            <span>Order Send</span>
+            <strong id="orderSend">---</strong>
+        </div>
+
+        <div class="row">
+            <span>Last Update</span>
+            <strong id="timestamp">---</strong>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        V15 signal dashboard • Demo/analysis display only • MT5 real order is not controlled by this page.
+    </div>
+
+</div>
+
+<script>
+async function loadV15(){
+
+    try{
+
+        const response = await fetch("../v15_signal.json?ts=" + Date.now(), {
+            cache:"no-store"
+        });
+
+        if(!response.ok){
+            throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+
+        document.getElementById("connection").textContent =
+            "● V15 CONNECTED";
+
+        const signal = String(data.signal || "WAIT").toUpperCase();
+
+        const signalEl = document.getElementById("signal");
+
+        signalEl.textContent = signal;
+        signalEl.className = "value signal " +
+            (signal === "BUY" ? "buy" :
+             signal === "SELL" ? "sell" : "wait");
+
+        document.getElementById("confidence").textContent =
+            Number(data.confidence || 0).toFixed(2) + "%";
+
+        document.getElementById("symbol").textContent =
+            data.symbol || "XAUUSDm";
+
+        document.getElementById("entry").textContent =
+            data.entry ?? "---";
+
+        document.getElementById("sl").textContent =
+            data.sl ?? "---";
+
+        document.getElementById("tp").textContent =
+            data.tp ?? "---";
+
+        document.getElementById("mtf").textContent =
+            data.mtf || "---";
+
+        document.getElementById("technical").textContent =
+            data.technical || "---";
+
+        document.getElementById("smc").textContent =
+            data.smc || "---";
+
+        document.getElementById("risk").textContent =
+            data.risk || "---";
+
+        document.getElementById("news").textContent =
+            data.news || "---";
+
+        document.getElementById("mode").textContent =
+            data.mode || "---";
+
+        document.getElementById("realTrading").textContent =
+            data.real_trading ? "ON" : "OFF";
+
+        document.getElementById("orderSend").textContent =
+            data.order_send ? "UNLOCKED" : "LOCKED";
+
+        document.getElementById("timestamp").textContent =
+            data.timestamp || "---";
+
+    }catch(error){
+
+        document.getElementById("connection").textContent =
+            "● V15 DISCONNECTED";
+
+        console.error(error);
+    }
+}
+
+loadV15();
+
+setInterval(loadV15, 5000);
+</script>
+
+</body>
+</html>
