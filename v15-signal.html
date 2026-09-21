@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>V15 Signal API</title>
+</head>
+<body>
+<pre id="out">Loading...</pre>
+<script>
+async function load(){
+  try{
+    const r=await fetch("./public-v15-signal.json?t="+Date.now(),{
+      cache:"no-store"
+    });
+    const d=await r.json();
+    document.getElementById("out").textContent=
+      JSON.stringify(d,null,2);
+  }catch(e){
+    document.getElementById("out").textContent="ERROR: "+e.message;
+  }
+}
+load();
+setInterval(load,10000);
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+﻿{
+  "signal": "WAIT",
+  "symbol": "XAUUSDm",
+  "confidence": 0,
+  "entry": null,
+  "sl": null,
+  "tp": null,
+  "mtf": "UNKNOWN",
+  "technical": "UNKNOWN",
+  "smc": "UNKNOWN",
+  "risk": "UNKNOWN",
+  "news": "UNKNOWN",
+  "timestamp": null,
+  "source": "V15",
+  "real_trading": false,
+  "order_send": false
+}
