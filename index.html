@@ -3,514 +3,1066 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="XAUUSD V15 AI Market Intelligence Dashboard">
-<title>XAUUSD V15 — AI Market Intelligence</title>
+<meta name="description" content="XAUUSD V15 — AI-powered gold market intelligence platform.">
+<meta name="theme-color" content="#070b12">
+
+<title>XAUUSD V15 | AI Market Intelligence</title>
 
 <style>
 *{box-sizing:border-box}
 
 :root{
---bg:#07111f;
---panel:#0d1b2e;
---panel2:#101f33;
---border:#1e3550;
---text:#edf5ff;
---muted:#8da3bc;
---blue:#4da3ff;
---green:#36d98b;
---red:#ff6075;
---yellow:#ffd166;
+  --bg:#070b12;
+  --bg2:#0b111b;
+  --panel:#0e1622;
+  --panel2:#111c2a;
+  --line:#1c2a3b;
+  --text:#f4f7fb;
+  --muted:#91a0b4;
+  --blue:#4f9cff;
+  --blue2:#78b6ff;
+  --green:#35d39a;
+  --red:#ff6175;
+  --gold:#e8c46a;
+  --shadow:0 20px 60px rgba(0,0,0,.28);
 }
 
+html{scroll-behavior:smooth}
+
 body{
-margin:0;
-background:
-radial-gradient(circle at 20% 0%,#102b4a 0,transparent 35%),
-radial-gradient(circle at 90% 10%,#182747 0,transparent 30%),
-var(--bg);
-color:var(--text);
-font-family:Inter,Arial,sans-serif;
+  margin:0;
+  background:
+    radial-gradient(circle at 15% -10%,rgba(79,156,255,.13),transparent 30%),
+    radial-gradient(circle at 85% 0%,rgba(232,196,106,.08),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  line-height:1.5;
 }
 
 a{
-color:inherit;
-text-decoration:none;
+  color:inherit;
+  text-decoration:none;
 }
 
 .container{
-max-width:1200px;
-margin:auto;
-padding:0 22px;
+  width:min(1180px,calc(100% - 40px));
+  margin:auto;
+}
+
+/* NAV */
+
+.nav-wrap{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(18px);
+  background:rgba(7,11,18,.78);
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
 
 nav{
-height:72px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid rgba(255,255,255,.06);
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
-.logo{
-font-size:20px;
-font-weight:800;
-letter-spacing:.5px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-weight:800;
+  letter-spacing:.2px;
 }
 
-.logo span{
-color:var(--blue);
+.brand-mark{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:linear-gradient(135deg,#4f9cff,#1f5db0);
+  box-shadow:0 8px 24px rgba(79,156,255,.25);
+  font-size:17px;
 }
 
-.navlinks{
-display:flex;
-gap:24px;
-color:var(--muted);
-font-size:14px;
+.brand span{
+  color:var(--blue2);
 }
 
-.navlinks a:hover{
-color:white;
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:25px;
+  color:var(--muted);
+  font-size:13px;
 }
+
+.nav-links a:hover{
+  color:#fff;
+}
+
+.nav-cta{
+  padding:9px 15px;
+  border:1px solid #315477;
+  border-radius:9px;
+  color:#dcecff!important;
+  background:#0c1a2a;
+}
+
+/* HERO */
 
 .hero{
-padding:80px 0 55px;
-text-align:center;
+  padding:92px 0 75px;
 }
 
-.badge{
-display:inline-block;
-padding:7px 13px;
-border:1px solid #244667;
-background:#0d2035;
-border-radius:30px;
-font-size:12px;
-color:#9fcaff;
-margin-bottom:20px;
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:60px;
+  align-items:center;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 11px;
+  border:1px solid #203b5b;
+  background:#0b1828;
+  color:#9ec8f8;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+}
+
+.dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px rgba(53,211,154,.8);
 }
 
 .hero h1{
-font-size:clamp(42px,7vw,76px);
-line-height:1;
-margin:0;
-letter-spacing:-3px;
+  font-size:clamp(46px,6vw,78px);
+  line-height:1.01;
+  letter-spacing:-4px;
+  margin:20px 0;
+  max-width:760px;
 }
 
 .hero h1 span{
-color:var(--blue);
+  color:var(--blue);
 }
 
-.hero p{
-max-width:680px;
-margin:22px auto;
-color:var(--muted);
-font-size:17px;
-line-height:1.7;
+.hero-copy{
+  color:var(--muted);
+  max-width:620px;
+  font-size:17px;
+  line-height:1.8;
 }
 
-.actions{
-display:flex;
-justify-content:center;
-gap:12px;
-flex-wrap:wrap;
-margin-top:28px;
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:11px;
+  margin-top:30px;
 }
 
 .btn{
-padding:13px 21px;
-border-radius:10px;
-font-weight:700;
-font-size:14px;
-border:1px solid var(--border);
-background:var(--panel);
-}
-
-.btn.primary{
-background:var(--blue);
-color:#03101d;
-border-color:var(--blue);
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  min-height:44px;
+  padding:0 18px;
+  border-radius:9px;
+  border:1px solid var(--line);
+  background:#0d1622;
+  color:#eaf2fc;
+  font-size:13px;
+  font-weight:750;
+  transition:.18s ease;
 }
 
 .btn:hover{
-transform:translateY(-1px);
+  transform:translateY(-2px);
+  border-color:#345777;
 }
 
-.section{
-padding:45px 0;
+.btn-primary{
+  background:linear-gradient(135deg,#5ba6ff,#367fd1);
+  border-color:#5ba6ff;
+  color:#03101e;
+  box-shadow:0 12px 35px rgba(79,156,255,.2);
+}
+
+.btn-large{
+  min-height:48px;
+  padding:0 22px;
+}
+
+/* HERO TERMINAL CARD */
+
+.terminal{
+  background:linear-gradient(145deg,#101a28,#0a111b);
+  border:1px solid #203044;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.terminal-head{
+  height:46px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0 15px;
+  border-bottom:1px solid #1b2938;
+}
+
+.terminal-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#435367;
+}
+
+.terminal-title{
+  margin-left:7px;
+  color:#718197;
+  font-size:11px;
+}
+
+.terminal-body{
+  padding:22px;
+}
+
+.live-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:22px;
+}
+
+.live-label{
+  color:#77899f;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.live-symbol{
+  font-size:24px;
+  font-weight:800;
+  margin-top:4px;
+}
+
+.live-status{
+  color:var(--green);
+  font-size:11px;
+}
+
+.signal-box{
+  padding:20px;
+  border:1px solid #20374e;
+  background:#0b1725;
+  border-radius:13px;
+  margin-bottom:12px;
+}
+
+.signal-label{
+  color:#7e90a7;
+  font-size:10px;
+  text-transform:uppercase;
+}
+
+.signal-value{
+  font-size:37px;
+  line-height:1;
+  margin:8px 0;
+  font-weight:900;
+  color:#ffd76a;
+}
+
+.signal-sub{
+  color:#718298;
+  font-size:11px;
+}
+
+.data-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+
+.data{
+  padding:13px;
+  background:#0c1520;
+  border:1px solid #172637;
+  border-radius:10px;
+}
+
+.data-label{
+  color:#6f8095;
+  font-size:9px;
+  text-transform:uppercase;
+}
+
+.data-value{
+  margin-top:4px;
+  font-size:15px;
+  font-weight:750;
+}
+
+/* STATS */
+
+.stats{
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  background:#09101a;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+
+.stat{
+  padding:23px;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+
+.stat:last-child{
+  border-right:0;
+}
+
+.stat-number{
+  font-size:24px;
+  font-weight:850;
+}
+
+.stat-label{
+  margin-top:4px;
+  color:#718197;
+  font-size:11px;
+}
+
+/* SECTIONS */
+
+section{
+  padding:90px 0;
+}
+
+.section-head{
+  max-width:700px;
+  margin-bottom:35px;
+}
+
+.kicker{
+  color:var(--blue2);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.4px;
+  text-transform:uppercase;
 }
 
 .section-title{
-font-size:28px;
-margin-bottom:8px;
+  margin:9px 0;
+  font-size:38px;
+  line-height:1.12;
+  letter-spacing:-1.4px;
 }
 
-.section-sub{
-color:var(--muted);
-margin-bottom:25px;
+.section-copy{
+  color:var(--muted);
+  font-size:15px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px;
+/* FEATURES */
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
 }
 
-.card{
-background:rgba(13,27,46,.88);
-border:1px solid var(--border);
-border-radius:16px;
-padding:23px;
-backdrop-filter:blur(8px);
+.feature{
+  padding:24px;
+  min-height:185px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(14,22,34,.72);
+  transition:.2s ease;
 }
 
-.card:hover{
-border-color:#315577;
+.feature:hover{
+  transform:translateY(-3px);
+  border-color:#2d4b68;
 }
 
-.icon{
-font-size:28px;
-margin-bottom:14px;
+.feature-icon{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:#102238;
+  margin-bottom:18px;
+  font-size:18px;
 }
 
-.card h3{
-margin:0 0 9px;
+.feature h3{
+  margin:0 0 8px;
+  font-size:16px;
 }
 
-.card p{
-margin:0;
-color:var(--muted);
-line-height:1.6;
-font-size:14px;
+.feature p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
 }
+
+/* DASHBOARD */
 
 .dashboard{
-display:grid;
-grid-template-columns:1.4fr .8fr;
-gap:16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
 }
 
-.signal-card{
-background:linear-gradient(145deg,#10243b,#0b1728);
-border:1px solid var(--border);
-border-radius:18px;
-padding:25px;
+.dashboard-card{
+  background:#0d1622;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:25px;
 }
 
-.signal-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
 }
 
-.signal{
-font-size:42px;
-font-weight:900;
-color:var(--yellow);
+.card-title{
+  font-size:15px;
+  font-weight:750;
 }
 
-.live{
-font-size:12px;
-color:var(--green);
-}
-
-.live:before{
-content:"";
-display:inline-block;
-width:7px;
-height:7px;
-background:var(--green);
-border-radius:50%;
-margin-right:6px;
-}
-
-.metrics{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-}
-
-.metric{
-background:var(--panel2);
-border-radius:11px;
-padding:15px;
-}
-
-.metric label{
-display:block;
-font-size:11px;
-color:var(--muted);
-text-transform:uppercase;
-margin-bottom:7px;
-}
-
-.metric strong{
-font-size:19px;
+.card-tag{
+  color:#8292a7;
+  font-size:10px;
 }
 
 .price{
-font-size:40px;
-font-weight:900;
-margin:8px 0;
+  font-size:45px;
+  font-weight:900;
+  letter-spacing:-2px;
 }
 
-.small{
-font-size:13px;
-color:var(--muted);
+.price-unit{
+  color:#708197;
+  font-size:11px;
 }
 
-.plan-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px;
+.mini-chart{
+  height:105px;
+  margin-top:20px;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid #1c2b3b;
+}
+
+.mini-chart svg{
+  width:100%;
+  height:100%;
+}
+
+.signal-big{
+  font-size:48px;
+  font-weight:900;
+  color:#ffd76a;
+}
+
+.green{
+  color:var(--green);
+}
+
+.red{
+  color:var(--red);
+}
+
+.yellow{
+  color:#ffd76a;
+}
+
+/* PLANS */
+
+.plans{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
 
 .plan{
-position:relative;
+  position:relative;
+  padding:28px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#0d1622;
 }
 
-.plan.pro{
-border-color:#347fc1;
-box-shadow:0 0 35px rgba(77,163,255,.08);
+.plan.featured{
+  border-color:#376d9f;
+  background:
+    radial-gradient(circle at 80% 0%,rgba(79,156,255,.12),transparent 35%),
+    #0d1622;
+  box-shadow:0 20px 60px rgba(0,0,0,.22);
 }
 
-.plan-tag{
-position:absolute;
-top:18px;
-right:18px;
-font-size:10px;
-padding:5px 8px;
-border-radius:20px;
-background:#153451;
-color:#9fcaff;
+.plan-badge{
+  position:absolute;
+  top:17px;
+  right:17px;
+  padding:5px 8px;
+  border-radius:20px;
+  background:#14304d;
+  color:#9dcbff;
+  font-size:9px;
+  font-weight:800;
+  text-transform:uppercase;
 }
 
-.price-big{
-font-size:35px;
-font-weight:900;
-margin:16px 0;
+.plan h3{
+  margin:0;
+  font-size:17px;
+}
+
+.plan-price{
+  margin:20px 0;
+  font-size:35px;
+  font-weight:900;
+}
+
+.plan-price span{
+  color:#728198;
+  font-size:11px;
+  font-weight:500;
 }
 
 .plan ul{
-padding-left:19px;
-color:var(--muted);
-line-height:2;
-font-size:14px;
+  padding-left:18px;
+  color:#93a2b5;
+  font-size:13px;
+  line-height:2;
+  min-height:155px;
 }
+
+/* CTA */
+
+.cta{
+  padding:42px;
+  border:1px solid #28445f;
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 80% 50%,rgba(79,156,255,.13),transparent 35%),
+    #0d1723;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.cta h2{
+  margin:0 0 8px;
+  font-size:30px;
+}
+
+.cta p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* FOOTER */
 
 footer{
-border-top:1px solid rgba(255,255,255,.06);
-margin-top:50px;
-padding:30px 0;
-color:#657c96;
-font-size:12px;
-text-align:center;
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:35px 0;
+  color:#617288;
+  font-size:11px;
 }
 
-.warning{
-margin-top:18px;
-padding:14px;
-background:#171f2c;
-border:1px solid #26374a;
-border-radius:10px;
-color:#9fb1c4;
-font-size:12px;
-line-height:1.6;
+.footer-row{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
 }
 
-@media(max-width:850px){
-.grid,
-.plan-grid,
-.dashboard{
-grid-template-columns:1fr;
-}
-.navlinks{
-display:none;
-}
+.footer-links{
+  display:flex;
+  gap:20px;
 }
 
-@media(max-width:550px){
-.hero{
-padding-top:55px;
+.footer-links a:hover{
+  color:#cbd8e8;
 }
-.hero h1{
-letter-spacing:-2px;
+
+.disclaimer{
+  margin-top:20px;
+  max-width:850px;
+  line-height:1.7;
 }
-.metrics{
-grid-template-columns:1fr;
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero{
+    padding-top:65px;
+  }
+
+  .feature-grid,
+  .plans{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
 }
+
+@media(max-width:650px){
+
+  .container{
+    width:min(100% - 28px,1180px);
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:47px;
+    letter-spacing:-2.5px;
+  }
+
+  .hero-copy{
+    font-size:15px;
+  }
+
+  section{
+    padding:65px 0;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .stat{
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+
+  .feature-grid,
+  .plans{
+    grid-template-columns:1fr;
+  }
+
+  .section-title{
+    font-size:30px;
+  }
+
+  .cta{
+    padding:27px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .footer-row{
+    flex-direction:column;
+  }
+
 }
 </style>
 </head>
 
 <body>
 
+<!-- NAVIGATION -->
+
+<div class="nav-wrap">
 <div class="container">
 
 <nav>
-<div class="logo">XAUUSD <span>V15</span></div>
 
-<div class="navlinks">
+<a class="brand" href="./">
+<div class="brand-mark">V</div>
+<div>XAUUSD <span>V15</span></div>
+</a>
+
+<div class="nav-links">
+<a href="#technology">Technology</a>
 <a href="./market/chart-history.html">Dashboard</a>
-<a href="./pricing/">Plans</a>
-<a href="./premium/">Premium</a>
+<a href="./pricing/">Pricing</a>
 <a href="./telegram/">Telegram</a>
+<a class="nav-cta" href="./premium/">Get Premium</a>
 </div>
+
 </nav>
+
+</div>
+</div>
+
+
+<!-- HERO -->
+
+<main>
 
 <section class="hero">
 
-<div class="badge">AI MARKET INTELLIGENCE • XAUUSD</div>
+<div class="container">
 
-<h1>Trade with<br><span>better information.</span></h1>
+<div class="hero-grid">
 
-<p>
-XAUUSD V15 combines market structure, technical analysis,
-multi-timeframe analysis, risk conditions and AI-based signal processing
-into one clean dashboard.
+<div>
+
+<div class="eyebrow">
+<span class="dot"></span>
+V15 MARKET INTELLIGENCE
+</div>
+
+<h1>
+See the market.<br>
+<span>Understand the signal.</span>
+</h1>
+
+<p class="hero-copy">
+XAUUSD V15 is a structured market-intelligence platform
+built for traders who want technical, multi-timeframe,
+smart-money and risk analysis in one place.
 </p>
 
-<div class="actions">
-<a class="btn primary" href="./market/chart-history.html">
+<div class="hero-actions">
+
+<a class="btn btn-primary btn-large"
+href="./market/chart-history.html">
 Open Live Dashboard →
 </a>
 
-<a class="btn" href="./pricing/">
-View V15 Plans
+<a class="btn btn-large"
+href="./pricing/">
+Explore Plans
 </a>
+
+</div>
+
+</div>
+
+
+<!-- LIVE PREVIEW -->
+
+<div class="terminal">
+
+<div class="terminal-head">
+<div class="terminal-dot"></div>
+<div class="terminal-dot"></div>
+<div class="terminal-dot"></div>
+<div class="terminal-title">xauusd-v15 / market-engine</div>
+</div>
+
+<div class="terminal-body">
+
+<div class="live-row">
+
+<div>
+<div class="live-label">Instrument</div>
+<div class="live-symbol">XAUUSDm</div>
+</div>
+
+<div class="live-status">● LIVE</div>
+
+</div>
+
+<div class="signal-box">
+
+<div class="signal-label">V15 Signal</div>
+
+<div id="signal" class="signal-value">
+WAIT
+</div>
+
+<div class="signal-sub">
+Analysis signal • not an execution command
+</div>
+
+</div>
+
+<div class="data-grid">
+
+<div class="data">
+<div class="data-label">Confidence</div>
+<div id="confidence" class="data-value">--</div>
+</div>
+
+<div class="data">
+<div class="data-label">MTF</div>
+<div id="mtf" class="data-value">--</div>
+</div>
+
+<div class="data">
+<div class="data-label">SMC</div>
+<div id="smc" class="data-value">--</div>
+</div>
+
+<div class="data">
+<div class="data-label">Risk</div>
+<div id="risk" class="data-value">--</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
 </div>
 
 </section>
 
-<section class="section">
 
-<div class="section-title">V15 Market Intelligence</div>
-<div class="section-sub">
-One dashboard. Multiple layers of market analysis.
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="container">
+
+<div class="stats-grid">
+
+<div class="stat">
+<div class="stat-number">XAUUSD</div>
+<div class="stat-label">Primary Market</div>
 </div>
 
-<div class="grid">
+<div class="stat">
+<div class="stat-number">MTF</div>
+<div class="stat-label">Multi-Timeframe Analysis</div>
+</div>
 
-<div class="card">
-<div class="icon">📊</div>
-<h3>Technical Analysis</h3>
+<div class="stat">
+<div class="stat-number">SMC</div>
+<div class="stat-label">Market Structure</div>
+</div>
+
+<div class="stat">
+<div class="stat-number">24/7</div>
+<div class="stat-label">Dashboard Access</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- TECHNOLOGY -->
+
+<section id="technology">
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="kicker">V15 ENGINE</div>
+
+<h2 class="section-title">
+Multiple layers. One market view.
+</h2>
+
+<p class="section-copy">
+V15 separates different areas of market analysis so users
+can see the evidence behind a signal instead of relying
+on a single indicator.
+</p>
+
+</div>
+
+
+<div class="feature-grid">
+
+<div class="feature">
+<div class="feature-icon">◈</div>
+<h3>Technical Engine</h3>
 <p>
-EMA, RSI, MACD and momentum conditions combined
-into a structured market view.
+EMA, RSI, MACD, momentum and price conditions
+are combined into a structured technical view.
 </p>
 </div>
 
-<div class="card">
-<div class="icon">🧠</div>
-<h3>Smart Money</h3>
+<div class="feature">
+<div class="feature-icon">⌁</div>
+<h3>Market Structure</h3>
 <p>
-Market structure, liquidity, BOS, CHOCH,
-order blocks and fair value concepts.
+HH, HL, LH, LL, BOS, CHOCH, liquidity and
+smart-money concepts provide structural context.
 </p>
 </div>
 
-<div class="card">
-<div class="icon">🛡️</div>
-<h3>Risk Intelligence</h3>
-<p>
-Spread, volatility, news and risk conditions
-are evaluated before a signal is displayed.
-</p>
-</div>
-
-<div class="card">
-<div class="icon">⏱️</div>
+<div class="feature">
+<div class="feature-icon">◫</div>
 <h3>Multi-Timeframe</h3>
 <p>
-Compare market conditions across multiple
-timeframes before making a decision.
+Higher and lower timeframe conditions are compared
+before the final market view is produced.
 </p>
 </div>
 
-<div class="card">
-<div class="icon">🤖</div>
-<h3>V15 AI Engine</h3>
+<div class="feature">
+<div class="feature-icon">△</div>
+<h3>Risk Intelligence</h3>
 <p>
-Multiple analysis modules contribute evidence
-to the final market signal.
+Volatility, spread, news and market risk conditions
+are included in the analysis workflow.
 </p>
 </div>
 
-<div class="card">
-<div class="icon">📡</div>
+<div class="feature">
+<div class="feature-icon">◎</div>
+<h3>AI Fusion</h3>
+<p>
+V15 combines evidence from multiple analysis modules
+into a single readable market signal.
+</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">⌁</div>
 <h3>Telegram Alerts</h3>
 <p>
-Premium users can receive V15 market signals
-through Telegram when the backend is connected.
+Premium infrastructure can deliver selected V15
+signals and market updates to Telegram.
 </p>
+</div>
+
 </div>
 
 </div>
 
 </section>
 
-<section class="section">
 
-<div class="section-title">Live Dashboard</div>
-<div class="section-sub">
-Current V15 interface preview.
+<!-- DASHBOARD -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="kicker">MARKET CENTER</div>
+
+<h2 class="section-title">
+A clean view of the gold market.
+</h2>
+
+<p class="section-copy">
+Monitor price and V15 analysis from one interface.
+</p>
+
 </div>
+
 
 <div class="dashboard">
 
-<div class="signal-card">
+<div class="dashboard-card">
 
-<div class="signal-top">
-<div>
-<div class="small">XAUUSD V15 SIGNAL</div>
-<div id="signal" class="signal">WAIT</div>
+<div class="card-top">
+
+<div class="card-title">Gold Spot</div>
+
+<div class="card-tag">XAU / USD</div>
+
 </div>
 
-<div class="live">SYSTEM ONLINE</div>
+<div id="price" class="price">
+--
 </div>
 
-<div class="metrics">
-
-<div class="metric">
-<label>Confidence</label>
-<strong id="confidence">--</strong>
+<div class="price-unit">
+USD per ounce
 </div>
 
-<div class="metric">
-<label>Market</label>
-<strong>XAUUSD</strong>
+<div class="mini-chart">
+
+<svg viewBox="0 0 500 110"
+preserveAspectRatio="none">
+
+<polyline
+points="0,85 40,80 75,88 110,63 150,72 185,47 220,54 260,35 300,49 335,28 370,38 410,18 450,30 500,12"
+fill="none"
+stroke="#4f9cff"
+stroke-width="2"
+/>
+
+</svg>
+
 </div>
 
-<div class="metric">
-<label>MTF</label>
-<strong id="mtf">--</strong>
 </div>
 
-<div class="metric">
-<label>Risk</label>
-<strong id="risk">--</strong>
+
+<div class="dashboard-card">
+
+<div class="card-top">
+
+<div class="card-title">V15 Signal</div>
+
+<div class="card-tag">ANALYSIS</div>
+
+</div>
+
+<div id="signalBig" class="signal-big">
+WAIT
+</div>
+
+<p class="section-copy">
+Current market direction generated by the
+V15 analysis pipeline.
+</p>
+
+<div class="data-grid">
+
+<div class="data">
+<div class="data-label">Technical</div>
+<div id="technical" class="data-value">--</div>
+</div>
+
+<div class="data">
+<div class="data-label">News</div>
+<div id="news" class="data-value">--</div>
 </div>
 
 </div>
 
 <br>
 
-<a class="btn primary" href="./market/chart-history.html">
-Open Full Dashboard
+<a class="btn btn-primary"
+href="./market/chart-history.html">
+View Full Analysis →
 </a>
 
-</div>
-
-<div class="signal-card">
-
-<div class="small">GOLD MARKET</div>
-<div id="price" class="price">--</div>
-<div class="small">USD / XAU</div>
-
-<br>
-
-<div class="metric">
-<label>System</label>
-<strong id="status">Checking...</strong>
 </div>
 
 </div>
@@ -519,123 +1071,273 @@ Open Full Dashboard
 
 </section>
 
-<section class="section">
 
-<div class="section-title">Choose your access</div>
-<div class="section-sub">
-Start free. Upgrade when you need deeper V15 analysis.
+<!-- PRICING -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="kicker">ACCESS</div>
+
+<h2 class="section-title">
+Choose the level of analysis you need.
+</h2>
+
+<p class="section-copy">
+Start with the public dashboard and upgrade for deeper
+V15 analysis and alerts.
+</p>
+
 </div>
 
-<div class="plan-grid">
 
-<div class="card plan">
+<div class="plans">
+
+
+<div class="plan">
+
 <h3>FREE</h3>
-<div class="price-big">$0</div>
+
+<div class="plan-price">
+$0
+<span>/ forever</span>
+</div>
 
 <ul>
-<li>Gold market dashboard</li>
-<li>Basic signal view</li>
-<li>Technical overview</li>
-<li>Public tools</li>
+<li>Public market dashboard</li>
+<li>Basic XAUUSD signal</li>
+<li>Market overview</li>
+<li>Public trading tools</li>
 </ul>
 
-<a class="btn" href="./market/chart-history.html">
-Start Free
+<a class="btn"
+href="./market/chart-history.html">
+Open Dashboard
 </a>
+
 </div>
 
-<div class="card plan pro">
-<div class="plan-tag">POPULAR</div>
+
+<div class="plan featured">
+
+<div class="plan-badge">
+POPULAR
+</div>
 
 <h3>V15 PRO</h3>
-<div class="price-big">$9.99</div>
 
-<ul>
-<li>V15 AI signals</li>
-<li>Confidence</li>
-<li>MTF analysis</li>
-<li>SMC analysis</li>
-<li>Risk analysis</li>
-<li>Entry / SL / TP</li>
-</ul>
-
-<a class="btn primary" href="./pricing/">
-Get Pro
-</a>
+<div class="plan-price">
+$9.99
+<span>/ month</span>
 </div>
 
-<div class="card plan">
+<ul>
+<li>V15 AI market signal</li>
+<li>Confidence analysis</li>
+<li>Multi-timeframe analysis</li>
+<li>SMC / structure analysis</li>
+<li>Risk environment</li>
+<li>Entry / SL / TP display</li>
+</ul>
+
+<a class="btn btn-primary"
+href="./pricing/">
+View PRO
+</a>
+
+</div>
+
+
+<div class="plan">
+
 <h3>PREMIUM</h3>
-<div class="price-big">$19.99</div>
+
+<div class="plan-price">
+$19.99
+<span>/ month</span>
+</div>
 
 <ul>
 <li>Everything in PRO</li>
 <li>Telegram alerts</li>
-<li>Advanced analytics</li>
+<li>Advanced market analytics</li>
 <li>Trade journal</li>
 <li>Performance reports</li>
 </ul>
 
-<a class="btn" href="./premium/">
-Get Premium
+<a class="btn"
+href="./premium/">
+View Premium
 </a>
-</div>
 
 </div>
 
-<div class="warning">
-<strong>Risk Notice:</strong>
-XAUUSD trading involves significant risk. V15 provides market analysis
-and educational information. No profit, return or win rate is guaranteed.
+</div>
+
 </div>
 
 </section>
 
-<footer>
-© 2026 XAUUSD V15 • AI Market Intelligence • Analysis Only
-</footer>
+
+<!-- CTA -->
+
+<section>
+
+<div class="container">
+
+<div class="cta">
+
+<div>
+
+<div class="kicker">START WITH V15</div>
+
+<h2>Turn market data into a clearer workflow.</h2>
+
+<p>
+Explore the dashboard and see how the V15 framework organizes XAUUSD analysis.
+</p>
 
 </div>
 
+<a class="btn btn-primary btn-large"
+href="./market/chart-history.html">
+Open Dashboard →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-row">
+
+<div>
+<strong>XAUUSD V15</strong>
+</div>
+
+<div class="footer-links">
+<a href="./market/chart-history.html">Dashboard</a>
+<a href="./pricing/">Pricing</a>
+<a href="./premium/">Premium</a>
+<a href="./telegram/">Telegram</a>
+</div>
+
+</div>
+
+<div class="disclaimer">
+<strong>Risk disclosure:</strong>
+XAUUSD and other financial instruments involve significant risk.
+V15 provides market analysis and educational information only.
+Signals are not guarantees of future results and are not a promise
+of profit. Users are responsible for their own trading decisions.
+</div>
+
+</div>
+
+</footer>
+
+
 <script>
 
-async function loadSignal(){
+const SIGNAL_URL="./public-v15-signal.json";
+
+function setText(id,value){
+const el=document.getElementById(id);
+if(el)el.textContent=value;
+}
+
+async function loadV15(){
 
 try{
 
-const r=await fetch("./public-v15-signal.json?t="+Date.now(),{
-cache:"no-store"
-});
+const response=await fetch(
+SIGNAL_URL+"?t="+Date.now(),
+{cache:"no-store"}
+);
 
-if(!r.ok)throw new Error("Signal unavailable");
+if(!response.ok){
+throw new Error("Signal unavailable");
+}
 
-const d=await r.json();
+const d=await response.json();
 
-document.getElementById("signal").textContent=
-String(d.signal||"WAIT").toUpperCase();
+const signal=String(d.signal||"WAIT").toUpperCase();
 
-document.getElementById("confidence").textContent=
-Number(d.confidence||0).toFixed(2)+"%";
+setText("signal",signal);
+setText("signalBig",signal);
 
-document.getElementById("mtf").textContent=
-d.mtf||"UNKNOWN";
+setText(
+"confidence",
+Number(d.confidence||0).toFixed(2)+"%"
+);
 
-document.getElementById("risk").textContent=
-d.risk||"UNKNOWN";
+setText("mtf",d.mtf||"UNKNOWN");
+setText("smc",d.smc||"UNKNOWN");
+setText("risk",d.risk||"UNKNOWN");
+setText("technical",d.technical||"UNKNOWN");
+setText("news",d.news||"UNKNOWN");
 
-document.getElementById("status").textContent=
-d.ok===false?"OFFLINE":"LIVE";
+}catch(error){
 
-}catch(e){
-
-document.getElementById("status").textContent="OFFLINE";
+setText("signal","WAIT");
+setText("signalBig","WAIT");
+setText("confidence","--");
+setText("mtf","OFFLINE");
+setText("smc","OFFLINE");
+setText("risk","OFFLINE");
+setText("technical","OFFLINE");
+setText("news","OFFLINE");
 
 }
 
 }
 
-loadSignal();
-setInterval(loadSignal,10000);
+async function loadGoldPrice(){
+
+try{
+
+const response=await fetch(
+"https://api.metals.dev/v1/metal/spot?metal=gold&currency=USD",
+{cache:"no-store"}
+);
+
+const d=await response.json();
+
+if(d && d.rate && d.rate.price){
+
+setText(
+"price",
+"$"+Number(d.rate.price).toFixed(2)
+);
+
+}
+
+}catch(error){
+
+setText("price","--");
+
+}
+
+}
+
+loadV15();
+loadGoldPrice();
+
+setInterval(loadV15,10000);
+setInterval(loadGoldPrice,60000);
 
 </script>
 
