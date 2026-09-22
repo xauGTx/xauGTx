@@ -3,219 +3,641 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>XAUUSD WEB - Gold Trading Tools</title>
-<meta name="description" content="XAUUSD trading calculators, education, market analysis and trading journal.">
-<link rel="stylesheet" href="style.css">
+<meta name="description" content="XAUUSD V15 AI Market Intelligence Dashboard">
+<title>XAUUSD V15 — AI Market Intelligence</title>
+
+<style>
+*{box-sizing:border-box}
+
+:root{
+--bg:#07111f;
+--panel:#0d1b2e;
+--panel2:#101f33;
+--border:#1e3550;
+--text:#edf5ff;
+--muted:#8da3bc;
+--blue:#4da3ff;
+--green:#36d98b;
+--red:#ff6075;
+--yellow:#ffd166;
+}
+
+body{
+margin:0;
+background:
+radial-gradient(circle at 20% 0%,#102b4a 0,transparent 35%),
+radial-gradient(circle at 90% 10%,#182747 0,transparent 30%),
+var(--bg);
+color:var(--text);
+font-family:Inter,Arial,sans-serif;
+}
+
+a{
+color:inherit;
+text-decoration:none;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:0 22px;
+}
+
+nav{
+height:72px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.logo{
+font-size:20px;
+font-weight:800;
+letter-spacing:.5px;
+}
+
+.logo span{
+color:var(--blue);
+}
+
+.navlinks{
+display:flex;
+gap:24px;
+color:var(--muted);
+font-size:14px;
+}
+
+.navlinks a:hover{
+color:white;
+}
+
+.hero{
+padding:80px 0 55px;
+text-align:center;
+}
+
+.badge{
+display:inline-block;
+padding:7px 13px;
+border:1px solid #244667;
+background:#0d2035;
+border-radius:30px;
+font-size:12px;
+color:#9fcaff;
+margin-bottom:20px;
+}
+
+.hero h1{
+font-size:clamp(42px,7vw,76px);
+line-height:1;
+margin:0;
+letter-spacing:-3px;
+}
+
+.hero h1 span{
+color:var(--blue);
+}
+
+.hero p{
+max-width:680px;
+margin:22px auto;
+color:var(--muted);
+font-size:17px;
+line-height:1.7;
+}
+
+.actions{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-top:28px;
+}
+
+.btn{
+padding:13px 21px;
+border-radius:10px;
+font-weight:700;
+font-size:14px;
+border:1px solid var(--border);
+background:var(--panel);
+}
+
+.btn.primary{
+background:var(--blue);
+color:#03101d;
+border-color:var(--blue);
+}
+
+.btn:hover{
+transform:translateY(-1px);
+}
+
+.section{
+padding:45px 0;
+}
+
+.section-title{
+font-size:28px;
+margin-bottom:8px;
+}
+
+.section-sub{
+color:var(--muted);
+margin-bottom:25px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.card{
+background:rgba(13,27,46,.88);
+border:1px solid var(--border);
+border-radius:16px;
+padding:23px;
+backdrop-filter:blur(8px);
+}
+
+.card:hover{
+border-color:#315577;
+}
+
+.icon{
+font-size:28px;
+margin-bottom:14px;
+}
+
+.card h3{
+margin:0 0 9px;
+}
+
+.card p{
+margin:0;
+color:var(--muted);
+line-height:1.6;
+font-size:14px;
+}
+
+.dashboard{
+display:grid;
+grid-template-columns:1.4fr .8fr;
+gap:16px;
+}
+
+.signal-card{
+background:linear-gradient(145deg,#10243b,#0b1728);
+border:1px solid var(--border);
+border-radius:18px;
+padding:25px;
+}
+
+.signal-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.signal{
+font-size:42px;
+font-weight:900;
+color:var(--yellow);
+}
+
+.live{
+font-size:12px;
+color:var(--green);
+}
+
+.live:before{
+content:"";
+display:inline-block;
+width:7px;
+height:7px;
+background:var(--green);
+border-radius:50%;
+margin-right:6px;
+}
+
+.metrics{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.metric{
+background:var(--panel2);
+border-radius:11px;
+padding:15px;
+}
+
+.metric label{
+display:block;
+font-size:11px;
+color:var(--muted);
+text-transform:uppercase;
+margin-bottom:7px;
+}
+
+.metric strong{
+font-size:19px;
+}
+
+.price{
+font-size:40px;
+font-weight:900;
+margin:8px 0;
+}
+
+.small{
+font-size:13px;
+color:var(--muted);
+}
+
+.plan-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.plan{
+position:relative;
+}
+
+.plan.pro{
+border-color:#347fc1;
+box-shadow:0 0 35px rgba(77,163,255,.08);
+}
+
+.plan-tag{
+position:absolute;
+top:18px;
+right:18px;
+font-size:10px;
+padding:5px 8px;
+border-radius:20px;
+background:#153451;
+color:#9fcaff;
+}
+
+.price-big{
+font-size:35px;
+font-weight:900;
+margin:16px 0;
+}
+
+.plan ul{
+padding-left:19px;
+color:var(--muted);
+line-height:2;
+font-size:14px;
+}
+
+footer{
+border-top:1px solid rgba(255,255,255,.06);
+margin-top:50px;
+padding:30px 0;
+color:#657c96;
+font-size:12px;
+text-align:center;
+}
+
+.warning{
+margin-top:18px;
+padding:14px;
+background:#171f2c;
+border:1px solid #26374a;
+border-radius:10px;
+color:#9fb1c4;
+font-size:12px;
+line-height:1.6;
+}
+
+@media(max-width:850px){
+.grid,
+.plan-grid,
+.dashboard{
+grid-template-columns:1fr;
+}
+.navlinks{
+display:none;
+}
+}
+
+@media(max-width:550px){
+.hero{
+padding-top:55px;
+}
+.hero h1{
+letter-spacing:-2px;
+}
+.metrics{
+grid-template-columns:1fr;
+}
+}
+</style>
 </head>
 
 <body>
 
-<header>
 <div class="container">
-<h1>XAUUSD WEB</h1>
-<p>Gold Trading Tools - Analysis - Education - Journal</p>
 
 <nav>
-<a href="index.html">Home</a>
-<a href="#tools">Tools</a>
-<a href="#education">Education</a>
-<a href="#market">Market</a>
-<a href="journal/index.html">Journal</a>
-<a href="news/index.html">News</a>
+<div class="logo">XAUUSD <span>V15</span></div>
+
+<div class="navlinks">
+<a href="./market/chart-history.html">Dashboard</a>
+<a href="./pricing/">Plans</a>
+<a href="./premium/">Premium</a>
+<a href="./telegram/">Telegram</a>
+</div>
 </nav>
 
-</div>
-</header>
+<section class="hero">
 
-<main class="container">
+<div class="badge">AI MARKET INTELLIGENCE • XAUUSD</div>
 
-<section class="card">
-<h2>XAUUSD Trading Center</h2>
+<h1>Trade with<br><span>better information.</span></h1>
+
 <p>
-Free tools and educational resources for Gold / XAUUSD traders.
+XAUUSD V15 combines market structure, technical analysis,
+multi-timeframe analysis, risk conditions and AI-based signal processing
+into one clean dashboard.
 </p>
+
+<div class="actions">
+<a class="btn primary" href="./market/chart-history.html">
+Open Live Dashboard →
+</a>
+
+<a class="btn" href="./pricing/">
+View V15 Plans
+</a>
+</div>
+
 </section>
 
+<section class="section">
 
-<section id="tools">
-<h2>Trading Tools</h2>
+<div class="section-title">V15 Market Intelligence</div>
+<div class="section-sub">
+One dashboard. Multiple layers of market analysis.
+</div>
 
 <div class="grid">
 
 <div class="card">
-<h3>Risk Calculator</h3>
-<p>Calculate trading risk.</p>
-<a href="tools/risk-calculator.html">Open Tool</a>
-</div>
-
-<div class="card">
-<h3>Position Size</h3>
-<p>Calculate position size.</p>
-<a href="tools/position-size.html">Open Tool</a>
-</div>
-
-<div class="card">
-<h3>Risk / Reward</h3>
-<p>Calculate R:R.</p>
-<a href="tools/rr-calculator.html">Open Tool</a>
-</div>
-
-<div class="card">
-<h3>Profit / Loss</h3>
-<p>Estimate P/L.</p>
-<a href="tools/profit-loss.html">Open Tool</a>
-</div>
-
-<div class="card">
-<h3>Price Distance</h3>
-<p>Calculate XAUUSD price distance.</p>
-<a href="tools/price-distance.html">Open Tool</a>
-</div>
-
-<div class="card">
-<h3>Pip Value</h3>
-<p>Estimate movement value.</p>
-<a href="tools/pip-value.html">Open Tool</a>
-</div>
-
-<div class="card">
-<h3>Breakeven</h3>
-<p>Calculate breakeven level.</p>
-<a href="tools/breakeven.html">Open Tool</a>
-</div>
-
-</div>
-</section>
-
-
-<section id="education">
-<h2>Education</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>EMA 50 / 200</h3>
-<a href="education/ema-50-200.html">Learn EMA</a>
-</div>
-
-<div class="card">
-<h3>RSI 9</h3>
-<a href="education/rsi-9.html">Learn RSI</a>
-</div>
-
-<div class="card">
-<h3>MACD 12 / 26 / 9</h3>
-<a href="education/macd-12-26-9.html">Learn MACD</a>
-</div>
-
-<div class="card">
-<h3>Stochastic</h3>
-<a href="education/stochastic.html">Learn Stochastic</a>
-</div>
-
-<div class="card">
-<h3>Market Structure</h3>
-<a href="education/market-structure.html">Learn Structure</a>
-</div>
-
-<div class="card">
-<h3>BOS</h3>
-<a href="education/bos.html">Learn BOS</a>
-</div>
-
-<div class="card">
-<h3>CHOCH / MSS</h3>
-<a href="education/choch-mss.html">Learn CHOCH / MSS</a>
-</div>
-
-<div class="card">
-<h3>Liquidity</h3>
-<a href="education/liquidity.html">Learn Liquidity</a>
-</div>
-
-<div class="card">
-<h3>Order Block / FVG</h3>
-<a href="education/order-block-fvg.html">Learn OB / FVG</a>
-</div>
-
-</div>
-</section>
-
-
-<section class="card"><h2>Live XAUUSD Dashboard</h2><p>Gold price, Bid, Ask, High, Low and daily change.</p><a href="market/dashboard.html">Open Live Dashboard</a></section><section class="card"><h2>Technical Signal Dashboard</h2><p>EMA 50/200 • RSI 9 • MACD 12/26/9 • Signal Clue</p><a href="market/technical-signal.html">Open Signal Dashboard</a></section><section class="card"><h2>XAUUSD Chart & Signal History</h2><p>Price chart • BUY / SELL / WAIT log • Signal history</p><a href="market/chart-history.html">Open Chart & History</a></section><section id="market">
-<h2>Market Center</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>XAUUSD Market</h3>
-<a href="market/xauusd.html">Open Market</a>
-</div>
-
-<div class="card">
+<div class="icon">📊</div>
 <h3>Technical Analysis</h3>
-<a href="market/technical.html">Open Technical</a>
-</div>
-
-<div class="card">
-<h3>Market Structure</h3>
-<a href="market/structure.html">Open Structure</a>
-</div>
-
-<div class="card">
-<h3>Trading Sessions</h3>
-<a href="market/sessions.html">Open Sessions</a>
-</div>
-
-</div>
-</section>
-
-
-<section>
-<h2>Trading Journal</h2>
-
-<div class="card">
-<p>Record your XAUUSD trades, risk, SL, TP and results.</p>
-<a href="journal/index.html">Open Trading Journal</a>
-</div>
-
-</section>
-
-
-<section>
-<h2>News Center</h2>
-
-<div class="card">
-<p>Review economic news risk before trading.</p>
-<a href="news/index.html">Open News Center</a>
-</div>
-
-</section>
-
-
-<section class="card">
-<h2>Risk Disclaimer</h2>
 <p>
-Trading financial markets involves significant risk.
-This website provides educational information and calculators
-only. No profit is guaranteed.
+EMA, RSI, MACD and momentum conditions combined
+into a structured market view.
 </p>
+</div>
+
+<div class="card">
+<div class="icon">🧠</div>
+<h3>Smart Money</h3>
+<p>
+Market structure, liquidity, BOS, CHOCH,
+order blocks and fair value concepts.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🛡️</div>
+<h3>Risk Intelligence</h3>
+<p>
+Spread, volatility, news and risk conditions
+are evaluated before a signal is displayed.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">⏱️</div>
+<h3>Multi-Timeframe</h3>
+<p>
+Compare market conditions across multiple
+timeframes before making a decision.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🤖</div>
+<h3>V15 AI Engine</h3>
+<p>
+Multiple analysis modules contribute evidence
+to the final market signal.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📡</div>
+<h3>Telegram Alerts</h3>
+<p>
+Premium users can receive V15 market signals
+through Telegram when the backend is connected.
+</p>
+</div>
+
+</div>
+
 </section>
 
-</main>
+<section class="section">
 
+<div class="section-title">Live Dashboard</div>
+<div class="section-sub">
+Current V15 interface preview.
+</div>
+
+<div class="dashboard">
+
+<div class="signal-card">
+
+<div class="signal-top">
+<div>
+<div class="small">XAUUSD V15 SIGNAL</div>
+<div id="signal" class="signal">WAIT</div>
+</div>
+
+<div class="live">SYSTEM ONLINE</div>
+</div>
+
+<div class="metrics">
+
+<div class="metric">
+<label>Confidence</label>
+<strong id="confidence">--</strong>
+</div>
+
+<div class="metric">
+<label>Market</label>
+<strong>XAUUSD</strong>
+</div>
+
+<div class="metric">
+<label>MTF</label>
+<strong id="mtf">--</strong>
+</div>
+
+<div class="metric">
+<label>Risk</label>
+<strong id="risk">--</strong>
+</div>
+
+</div>
+
+<br>
+
+<a class="btn primary" href="./market/chart-history.html">
+Open Full Dashboard
+</a>
+
+</div>
+
+<div class="signal-card">
+
+<div class="small">GOLD MARKET</div>
+<div id="price" class="price">--</div>
+<div class="small">USD / XAU</div>
+
+<br>
+
+<div class="metric">
+<label>System</label>
+<strong id="status">Checking...</strong>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="section-title">Choose your access</div>
+<div class="section-sub">
+Start free. Upgrade when you need deeper V15 analysis.
+</div>
+
+<div class="plan-grid">
+
+<div class="card plan">
+<h3>FREE</h3>
+<div class="price-big">$0</div>
+
+<ul>
+<li>Gold market dashboard</li>
+<li>Basic signal view</li>
+<li>Technical overview</li>
+<li>Public tools</li>
+</ul>
+
+<a class="btn" href="./market/chart-history.html">
+Start Free
+</a>
+</div>
+
+<div class="card plan pro">
+<div class="plan-tag">POPULAR</div>
+
+<h3>V15 PRO</h3>
+<div class="price-big">$9.99</div>
+
+<ul>
+<li>V15 AI signals</li>
+<li>Confidence</li>
+<li>MTF analysis</li>
+<li>SMC analysis</li>
+<li>Risk analysis</li>
+<li>Entry / SL / TP</li>
+</ul>
+
+<a class="btn primary" href="./pricing/">
+Get Pro
+</a>
+</div>
+
+<div class="card plan">
+<h3>PREMIUM</h3>
+<div class="price-big">$19.99</div>
+
+<ul>
+<li>Everything in PRO</li>
+<li>Telegram alerts</li>
+<li>Advanced analytics</li>
+<li>Trade journal</li>
+<li>Performance reports</li>
+</ul>
+
+<a class="btn" href="./premium/">
+Get Premium
+</a>
+</div>
+
+</div>
+
+<div class="warning">
+<strong>Risk Notice:</strong>
+XAUUSD trading involves significant risk. V15 provides market analysis
+and educational information. No profit, return or win rate is guaranteed.
+</div>
+
+</section>
 
 <footer>
-<div class="container">
-<p>XAUUSD WEB - 2026</p>
-<p>Gold Trading Tools and Education</p>
-</div>
+© 2026 XAUUSD V15 • AI Market Intelligence • Analysis Only
 </footer>
 
-<script src="app.js"></script>
+</div>
+
+<script>
+
+async function loadSignal(){
+
+try{
+
+const r=await fetch("./public-v15-signal.json?t="+Date.now(),{
+cache:"no-store"
+});
+
+if(!r.ok)throw new Error("Signal unavailable");
+
+const d=await r.json();
+
+document.getElementById("signal").textContent=
+String(d.signal||"WAIT").toUpperCase();
+
+document.getElementById("confidence").textContent=
+Number(d.confidence||0).toFixed(2)+"%";
+
+document.getElementById("mtf").textContent=
+d.mtf||"UNKNOWN";
+
+document.getElementById("risk").textContent=
+d.risk||"UNKNOWN";
+
+document.getElementById("status").textContent=
+d.ok===false?"OFFLINE":"LIVE";
+
+}catch(e){
+
+document.getElementById("status").textContent="OFFLINE";
+
+}
+
+}
+
+loadSignal();
+setInterval(loadSignal,10000);
+
+</script>
 
 </body>
 </html>
-
-
-
